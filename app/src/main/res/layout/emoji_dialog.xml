@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="6"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="30dp">
+
+        <ImageView
+            android:id="@+id/emoji1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji1"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji2"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji3"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji4"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji5"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji6"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji6"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji7"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji7"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji8"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji8"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji9"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji9"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji10"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji10"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji11"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji11"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji12"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji12"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji13"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji13"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji14"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji14"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji15"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji15"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji16"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji16"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji17"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji17"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji18"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji18"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji19"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji19"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji20"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji20"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji21"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji21"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji22"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji22"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji23"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji23"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji24"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji24"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji25"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji25"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji26"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji26"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji27"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji27"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji28"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji28"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji29"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji29"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji30"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji30"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/emoji31"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/emoji31"
+            android:layout_margin="5dp"/>
+
+    </GridLayout>
+
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="right"
+        android:background="@drawable/ic_close"
+        android:layout_margin="10dp"/>
+
+</FrameLayout>
