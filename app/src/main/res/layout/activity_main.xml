@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".main.MainActivity"
     android:orientation="vertical">
 
     <FrameLayout
@@ -28,7 +28,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="customOnClick">
 
             <ImageView
                 android:id="@+id/img_tab1"
@@ -52,7 +53,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="customOnClick">
 
             <ImageView
                 android:id="@+id/img_tab2"
@@ -76,7 +78,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="customOnClick">
 
             <ImageView
                 android:id="@+id/img_tab3"
