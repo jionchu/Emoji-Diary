@@ -2,9 +2,9 @@ package org.techtest.emoji_diary.main.like
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +17,10 @@ import org.techtest.emoji_diary.add.AddActivity
 import org.techtest.emoji_diary.main.MainActivity
 import java.util.*
 
-class MainLikeFragment : Fragment() {
+class MainLikeFragment : androidx.fragment.app.Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: RecyclerView.Adapter<*>
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    private lateinit var adapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>
     private lateinit var onTouchListener: RecyclerTouchListener
     private var favoriteList: ArrayList<Int>? = null
     private lateinit var tvCount: TextView
@@ -29,7 +29,7 @@ class MainLikeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_like, container, false)
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
+        val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         recyclerView = view.findViewById(R.id.favorite_recycler_view)
         recyclerView.layoutManager = layoutManager
         favoriteList = MainActivity.favoriteList

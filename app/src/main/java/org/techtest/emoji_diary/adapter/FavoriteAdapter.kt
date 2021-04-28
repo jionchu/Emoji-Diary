@@ -1,7 +1,7 @@
 package org.techtest.emoji_diary.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import org.techtest.emoji_diary.main.MainActivity
 import org.techtest.emoji_diary.model.Diary
 import java.util.*
 
-class FavoriteAdapter(context: Context?, favorite_list: ArrayList<Int>) : RecyclerView.Adapter<FavoriteViewHolder>() {
+class FavoriteAdapter(context: Context?, favorite_list: ArrayList<Int>) : androidx.recyclerview.widget.RecyclerView.Adapter<FavoriteViewHolder>() {
     private val favoriteList: ArrayList<Int>
     private val diaryArrayList: ArrayList<Diary>
     private val inflater: LayoutInflater
@@ -22,7 +22,7 @@ class FavoriteAdapter(context: Context?, favorite_list: ArrayList<Int>) : Recycl
     private var date: Date? = null
     private var emoji = 0
 
-    class FavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class FavoriteViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         var ivImage: ImageView
         var ivFavorite: ImageView
         var tvTitle: TextView

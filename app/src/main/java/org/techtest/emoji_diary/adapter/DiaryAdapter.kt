@@ -1,7 +1,7 @@
 package org.techtest.emoji_diary.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import org.techtest.emoji_diary.main.MainActivity
 import org.techtest.emoji_diary.model.Diary
 import java.util.*
 
-class DiaryAdapter(context: Context?, diary_list: ArrayList<Diary>) : RecyclerView.Adapter<DiaryViewHolder>() {
+class DiaryAdapter(context: Context?, diary_list: ArrayList<Diary>) : androidx.recyclerview.widget.RecyclerView.Adapter<DiaryViewHolder>() {
     private val diaryArrayList: ArrayList<Diary>
     private val inflater: LayoutInflater
     private var title: String? = null
@@ -21,7 +21,7 @@ class DiaryAdapter(context: Context?, diary_list: ArrayList<Diary>) : RecyclerVi
     private var date: Date? = null
     private var emoji = 0
 
-    class DiaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class DiaryViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         var ivImage: ImageView
         var ivFavorite: ImageView
         var tvTitle: TextView

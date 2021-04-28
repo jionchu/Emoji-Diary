@@ -2,9 +2,9 @@ package org.techtest.emoji_diary.main.daily
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +18,10 @@ import org.techtest.emoji_diary.add.AddActivity
 import org.techtest.emoji_diary.main.MainActivity
 import java.util.*
 
-class MainDailyFragment : Fragment() {
+class MainDailyFragment : androidx.fragment.app.Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: RecyclerView.Adapter<*>
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    private lateinit var adapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>
     private lateinit var onTouchListener: RecyclerTouchListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +33,7 @@ class MainDailyFragment : Fragment() {
         val tvDate: TextView = view.findViewById(R.id.txt_main_date)
         val tvDefault: TextView = view.findViewById(R.id.tv_default)
         recyclerView = view.findViewById(R.id.diary_recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
 
         val calender = Calendar.getInstance()
         val year = calender[Calendar.YEAR]

@@ -1,7 +1,7 @@
 package org.techtest.emoji_diary.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +11,11 @@ import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.adapter.EmojiAdapter.EmojiViewHolder
 import java.util.*
 
-class EmojiAdapter(context: Context?, emoji_list: Map<Int, ArrayList<Int>?>) : RecyclerView.Adapter<EmojiViewHolder>() {
+class EmojiAdapter(context: Context?, emoji_list: Map<Int, ArrayList<Int>?>) : androidx.recyclerview.widget.RecyclerView.Adapter<EmojiViewHolder>() {
     private val emojiList: Map<Int, ArrayList<Int>?> = emoji_list
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    class EmojiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class EmojiViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val ivEmoji: ImageView = itemView.findViewById(R.id.emoji_image)
         val tvCount: TextView = itemView.findViewById(R.id.txt_count)
     }
