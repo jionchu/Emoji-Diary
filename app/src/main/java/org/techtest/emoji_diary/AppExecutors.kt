@@ -19,7 +19,7 @@ class AppExecutors {
                 MainThreadExecutor())
     }
 
-    constructor(diskIO: Executor, networkIO: Executor, mainThread: Executor) {
+    private constructor(diskIO: Executor, networkIO: Executor, mainThread: Executor) {
         this.mDiskIO = diskIO;
         this.mNetworkIO = networkIO;
         this.mMainThread = mainThread;

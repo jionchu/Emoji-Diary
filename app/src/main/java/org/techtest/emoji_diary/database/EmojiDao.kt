@@ -16,5 +16,9 @@ interface EmojiDao {
     fun loadByIds(emojiId: IntArray): List<Emoji>
 
     @Insert
-    fun insertEmoji(vararg emoji: Emoji)
+    fun insert(emoji: Emoji)
+
+    @Insert
+    @JvmSuppressWildcards
+    fun insertAll(emojiList: List<Emoji>)
 }

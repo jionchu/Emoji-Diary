@@ -2,11 +2,16 @@ package org.techtest.emoji_diary.main
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.room.Database
+import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.R
+import org.techtest.emoji_diary.database.AppDatabase
 import org.techtest.emoji_diary.main.daily.MainDailyFragment
 import org.techtest.emoji_diary.main.like.MainLikeFragment
 import org.techtest.emoji_diary.main.monthly.MainMonthlyFragment
@@ -37,8 +42,15 @@ class MainActivity : AppCompatActivity() {
         mTvDaily = findViewById(R.id.txt_tab1)
         mTvLike = findViewById(R.id.txt_tab2)
         mTvMonthly = findViewById(R.id.txt_tab3)
+
+        val database = MyApplication.sInstance!!
+        Log.d("MainActivity", database.emojiDao().getAll().size.toString())
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("MainActivity", MyApplication.sInstance!!.emojiDao().getAll().size.toString())
+    }
     override fun onStart() {
         super.onStart()
 

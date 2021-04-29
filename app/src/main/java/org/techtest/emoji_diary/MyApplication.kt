@@ -8,17 +8,20 @@ import org.techtest.emoji_diary.database.AppDatabase
  */
 class MyApplication : Application() {
 
-    lateinit var mAppExecutors: AppExecutors
+    private lateinit var mAppExecutors: AppExecutors
 
     override fun onCreate() {
         super.onCreate()
-        mAppExecutors = AppExecutors();
-
-        sInstance = getDatabase()
+        mAppExecutors = AppExecutors()
+        getRepository()
     }
 
-    fun getDatabase(): AppDatabase? {
+    fun getDatabase(): AppDatabase {
         return AppDatabase.getInstance(this, mAppExecutors)
+    }
+
+    fun getRepository(): DataRepository {
+        return DataRepository.getInstance(getDatabase())
     }
 
     companion object {
