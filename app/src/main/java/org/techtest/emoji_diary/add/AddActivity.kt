@@ -6,10 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import org.techtest.emoji_diary.MyApplication
+import org.techtest.emoji_diary.MyApplication.Companion.dateFormat
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.main.MainActivity
+import org.techtest.emoji_diary.database.Diary
 import org.techtest.emoji_diary.main.daily.MainDailyFragment
-import org.techtest.emoji_diary.model.Diary
 import java.util.*
 
 class AddActivity : AppCompatActivity() {
@@ -24,6 +25,7 @@ class AddActivity : AppCompatActivity() {
     private var diary: Diary? = null
     private var position = 0
     private var emoji = 0
+    private var image = R.drawable.emoji1
     private var favorite = false
     private var date: Date? = null
     private var datePicker: DatePicker? = null
@@ -39,50 +41,11 @@ class AddActivity : AppCompatActivity() {
         ivEmoji = findViewById(R.id.img_emoji)
         tvDate = findViewById(R.id.txt_date)
         position = intent.getIntExtra("position", -1)
-        date = MainDailyFragment.Companion.dateToday
-        tvDate.text = date!!.year.toString() + "년 " + (date!!.month + 1) + "월 " + date!!.date + "일"
-        if (position >= 0) {
-            diary = MainActivity.diaryArrayList[position]
-            date = diary!!.date
-            tvDate.text = date!!.year.toString() + "년 " + (date!!.month + 1) + "월 " + date!!.date + "일"
-            etTitle.setText(diary!!.title)
-            etContent.setText(diary!!.content?.replace(" ", "\u00A0"))
-            favorite = diary!!.favorite
-            emoji = diary!!.image
-            when (emoji) {
-                1 -> ivEmoji.setImageResource(R.drawable.emoji1)
-                2 -> ivEmoji.setImageResource(R.drawable.emoji2)
-                3 -> ivEmoji.setImageResource(R.drawable.emoji3)
-                4 -> ivEmoji.setImageResource(R.drawable.emoji4)
-                5 -> ivEmoji.setImageResource(R.drawable.emoji5)
-                6 -> ivEmoji.setImageResource(R.drawable.emoji6)
-                7 -> ivEmoji.setImageResource(R.drawable.emoji7)
-                8 -> ivEmoji.setImageResource(R.drawable.emoji8)
-                9 -> ivEmoji.setImageResource(R.drawable.emoji9)
-                10 -> ivEmoji.setImageResource(R.drawable.emoji10)
-                11 -> ivEmoji.setImageResource(R.drawable.emoji11)
-                12 -> ivEmoji.setImageResource(R.drawable.emoji12)
-                13 -> ivEmoji.setImageResource(R.drawable.emoji13)
-                14 -> ivEmoji.setImageResource(R.drawable.emoji14)
-                15 -> ivEmoji.setImageResource(R.drawable.emoji15)
-                16 -> ivEmoji.setImageResource(R.drawable.emoji16)
-                17 -> ivEmoji.setImageResource(R.drawable.emoji17)
-                18 -> ivEmoji.setImageResource(R.drawable.emoji18)
-                19 -> ivEmoji.setImageResource(R.drawable.emoji19)
-                20 -> ivEmoji.setImageResource(R.drawable.emoji20)
-                21 -> ivEmoji.setImageResource(R.drawable.emoji21)
-                22 -> ivEmoji.setImageResource(R.drawable.emoji22)
-                23 -> ivEmoji.setImageResource(R.drawable.emoji23)
-                24 -> ivEmoji.setImageResource(R.drawable.emoji24)
-                25 -> ivEmoji.setImageResource(R.drawable.emoji25)
-                26 -> ivEmoji.setImageResource(R.drawable.emoji26)
-                27 -> ivEmoji.setImageResource(R.drawable.emoji27)
-                28 -> ivEmoji.setImageResource(R.drawable.emoji28)
-                29 -> ivEmoji.setImageResource(R.drawable.emoji29)
-                30 -> ivEmoji.setImageResource(R.drawable.emoji30)
-                31 -> ivEmoji.setImageResource(R.drawable.emoji31)
-            }
-        }
+
+        date = MainDailyFragment.dateToday
+        tvDate.text = MyApplication.dateStrFormat.format(date)
+
+        //TODO: edit diary already existed
 
         tvDate.setOnClickListener {
             val datepickerBuilder = AlertDialog.Builder(this@AddActivity)
@@ -266,6 +229,7 @@ class AddActivity : AppCompatActivity() {
             }
             dialog.show()
         }
+
         btnDone.setOnClickListener {
             val title = etTitle.text.toString()
             val content = etContent.text.toString()
@@ -273,18 +237,13 @@ class AddActivity : AppCompatActivity() {
                 title.trim { it <= ' ' } == "" -> etTitle.error = "제목을 입력하세요."
                 content.trim { it <= ' ' } == "" -> etContent.error = "내용을 입력하세요."
                 else -> {
-                    if (position == -1) MainActivity.diaryArrayList.add(0, Diary(emoji, title, date!!, content, favorite)) else {
-                        diary?.date = date as Date
-                        diary?.content = content
-                        diary?.title = title
-                        diary?.image = emoji
-                        diary?.favorite = favorite
-                        diary?.let { it1 -> MainActivity.diaryArrayList.set(position, it1) }
-                    }
+                    MyApplication.sInstance!!.diaryDao().insertDiary(Diary(dateFormat.format(date).toString(), 1, R.drawable.emoji1, title, content, false))
+                    //TODO: diary update
                     finish()
                 }
             }
         }
+
         btnBack.setOnClickListener { finish() }
     }
 }

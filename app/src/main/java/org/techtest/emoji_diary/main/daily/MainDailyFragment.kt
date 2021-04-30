@@ -2,27 +2,29 @@ package org.techtest.emoji_diary.main.daily
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.melnykov.fab.FloatingActionButton
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener
-import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener.OnRowClickListener
+import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.adapter.DiaryAdapter
 import org.techtest.emoji_diary.add.AddActivity
-import org.techtest.emoji_diary.main.MainActivity
+import org.techtest.emoji_diary.viewmodel.DiaryViewModel
+import org.techtest.emoji_diary.viewmodel.DiaryViewModelFactory
 import java.util.*
 
 class MainDailyFragment : androidx.fragment.app.Fragment() {
 
-    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
-    private lateinit var adapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var mDiaryAdapter: DiaryAdapter
     private lateinit var onTouchListener: RecyclerTouchListener
+    private lateinit var diaryViewModel: DiaryViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,17 +35,28 @@ class MainDailyFragment : androidx.fragment.app.Fragment() {
         val tvDate: TextView = view.findViewById(R.id.txt_main_date)
         val tvDefault: TextView = view.findViewById(R.id.tv_default)
         recyclerView = view.findViewById(R.id.diary_recycler_view)
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        mDiaryAdapter = DiaryAdapter()
+        recyclerView.adapter = mDiaryAdapter
 
-        val calender = Calendar.getInstance()
-        val year = calender[Calendar.YEAR]
-        val month = calender[Calendar.MONTH]
-        val day = calender[Calendar.DAY_OF_MONTH]
-        dateToday = Date(year, month, day)
+        val factory = DiaryViewModelFactory(
+                MyApplication.sRepository!!
+        )
+        diaryViewModel = ViewModelProvider(this, factory).get(DiaryViewModel::class.java)
+        diaryViewModel.allDiaries.observe(viewLifecycleOwner) { diaries ->
+            run {
+                diaries.let { mDiaryAdapter.submitList(it) }
+            }
+        }
 
-        val strDate = "${year}년 ${month+1}월 ${day}일"
-        tvDate.text = strDate
+        dateToday = Date()
 
+        val strDate = "${dateToday!!.year}년 ${dateToday!!.month+1}월 ${dateToday!!.day}일"
+        tvDate.text = MyApplication.dateStrFormat.format(dateToday)
+
+        if (MyApplication.sInstance!!.diaryDao().getRowCount() > 0)
+            tvDefault.visibility = View.GONE
+/*
         if (MainActivity.diaryArrayList.size != 0) tvDefault.visibility = View.GONE
         onTouchListener = RecyclerTouchListener(activity, recyclerView)
                 .setClickable(object : OnRowClickListener {
@@ -57,14 +70,15 @@ class MainDailyFragment : androidx.fragment.app.Fragment() {
                 }).setSwipeOptionViews(R.id.button_heart, R.id.button_delete).setSwipeable(R.id.item_fg, R.id.item_bg) { viewID, position ->
                     if (viewID == R.id.button_heart) {
                         MainActivity.diaryArrayList[position].favorite = !MainActivity.diaryArrayList[position].favorite
-                        adapter = DiaryAdapter(context, MainActivity.diaryArrayList)
-                        recyclerView.adapter = adapter
+                        mDiaryAdapter = DiaryAdapter(context, MainActivity.diaryArrayList)
+                        recyclerView.adapter = mDiaryAdapter
                     } else if (viewID == R.id.button_delete) {
                         MainActivity.diaryArrayList.removeAt(position)
-                        adapter = DiaryAdapter(context, MainActivity.diaryArrayList)
-                        recyclerView.adapter = adapter
+                        mDiaryAdapter = DiaryAdapter(context, MainActivity.diaryArrayList)
+                        recyclerView.adapter = mDiaryAdapter
                     }
                 }
+*/
 
         fab.attachToRecyclerView(recyclerView)
         fab.setOnClickListener {
@@ -77,14 +91,12 @@ class MainDailyFragment : androidx.fragment.app.Fragment() {
 
     override fun onResume() {
         super.onResume()
-        recyclerView.addOnItemTouchListener(onTouchListener)
-        adapter = DiaryAdapter(context, MainActivity.diaryArrayList)
-        recyclerView.adapter = adapter
+//        recyclerView.addOnItemTouchListener(onTouchListener)
     }
 
     override fun onPause() {
         super.onPause()
-        recyclerView.removeOnItemTouchListener(onTouchListener)
+//        recyclerView.removeOnItemTouchListener(onTouchListener)
     }
 
     companion object {

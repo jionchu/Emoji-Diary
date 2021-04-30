@@ -7,11 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.room.Database
 import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.database.AppDatabase
 import org.techtest.emoji_diary.main.daily.MainDailyFragment
 import org.techtest.emoji_diary.main.like.MainLikeFragment
 import org.techtest.emoji_diary.main.monthly.MainMonthlyFragment
@@ -50,7 +47,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.d("MainActivity", MyApplication.sInstance!!.emojiDao().getAll().size.toString())
+        Log.d("MainActivity", MyApplication.sInstance!!.diaryDao().getRowCount().toString())
     }
+
     override fun onStart() {
         super.onStart()
 
@@ -68,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun customOnClick(view : View) {
+    fun customOnClick(view: View) {
         when (view.id) {
             R.id.button_tab1 -> {
                 supportFragmentManager.beginTransaction()

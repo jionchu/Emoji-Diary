@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
 /**
  * Created by jionchu on 2021-04-26
  */
-@Database(entities = [Emoji::class, Diary::class], version = 1)
+@Database(entities = [Emoji::class, Diary::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun emojiDao(): EmojiDao
     abstract fun diaryDao(): DiaryDao
@@ -23,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
         private const val DATABASE_NAME = "emoji-diary-db"
 
         fun getInstance(context: Context, executors: AppExecutors): AppDatabase =
-            sInstance ?: synchronized(AppDatabase::class) {
+            sInstance ?: synchronized(this) {
                 sInstance ?: buildDatabase(context.applicationContext, executors).also { sInstance = it }
             }
 
@@ -43,7 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
                         override fun onOpen(db: SupportSQLiteDatabase) {
                             super.onOpen(db)
                             Log.d("Appdatabase", "onOpen")
-                            appContext.deleteDatabase(DATABASE_NAME)
+//                            appContext.deleteDatabase(DATABASE_NAME)
                         }
                     })
                     .fallbackToDestructiveMigration()

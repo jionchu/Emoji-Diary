@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="오늘의 기분을 이모지로 표현해보세요."/>
+            android:text="@string/main_daily_empty"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/diary_recycler_view"

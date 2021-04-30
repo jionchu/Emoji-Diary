@@ -1,5 +1,6 @@
 package org.techtest.emoji_diary.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 /**
@@ -8,13 +9,19 @@ import androidx.room.*
 @Dao
 interface DiaryDao {
     @Query("SELECT * FROM diary")
-    fun getAll(): List<Diary>
+    fun loadAll(): LiveData<List<Diary>>
 
-    @Query("SELECT * FROM diary WHERE id in (:diaryId)")
-    fun loadByIds(diaryId: IntArray): Diary
+    @Query("SELECT * FROM diary WHERE id = (:diaryId)")
+    fun loadById(diaryId: Int): LiveData<Diary>
 
     @Query("SELECT * FROM diary WHERE `like` = (:likeState)")
-    fun loadByLike(likeState: Boolean): List<Diary>
+    fun loadByLike(likeState: Boolean): LiveData<List<Diary>>
+
+    @Query("SELECT * FROM diary WHERE emojiId = (:emojiId)")
+    fun loadByEmoji(emojiId: Int): LiveData<List<Diary>>
+
+    @Query("SELECT COUNT(id) from diary")
+    fun getRowCount(): Int
 
     @Insert
     fun insertDiary(vararg diary: Diary)

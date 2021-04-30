@@ -19,8 +19,8 @@ import java.util.*
 
 class MainLikeFragment : androidx.fragment.app.Fragment() {
 
-    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
-    private lateinit var adapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: RecyclerView.Adapter<*>
     private lateinit var onTouchListener: RecyclerTouchListener
     private var favoriteList: ArrayList<Int>? = null
     private lateinit var tvCount: TextView
@@ -29,7 +29,7 @@ class MainLikeFragment : androidx.fragment.app.Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_like, container, false)
-        val layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         recyclerView = view.findViewById(R.id.favorite_recycler_view)
         recyclerView.layoutManager = layoutManager
         favoriteList = MainActivity.favoriteList

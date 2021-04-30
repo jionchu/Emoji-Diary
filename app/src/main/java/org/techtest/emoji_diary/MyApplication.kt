@@ -1,7 +1,9 @@
 package org.techtest.emoji_diary
 
+import android.annotation.SuppressLint
 import android.app.Application
 import org.techtest.emoji_diary.database.AppDatabase
+import java.text.SimpleDateFormat
 
 /**
  * Created by jionchu on 2021-04-26
@@ -13,7 +15,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         mAppExecutors = AppExecutors()
-        getRepository()
+        sRepository = getRepository()
     }
 
     fun getDatabase(): AppDatabase {
@@ -26,5 +28,11 @@ class MyApplication : Application() {
 
     companion object {
         var sInstance: AppDatabase? = null
+        var sRepository: DataRepository? = null
+
+        @SuppressLint("SimpleDateFormat")
+        val dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        @SuppressLint("SimpleDateFormat")
+        val dateStrFormat: SimpleDateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
     }
 }

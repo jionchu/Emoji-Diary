@@ -10,15 +10,17 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "diary", foreignKeys = arrayOf(
         ForeignKey(entity = Emoji::class,
                 parentColumns = ["id"],
-                childColumns =  ["emoji"]
+                childColumns =  ["emojiId"]
         )
+
 ))
 data class Diary(
         var date: String,
-        var emoji: Int,
+        var emojiId: Int,
+        var emojiRes: Int,
         var title: String,
         var content: String,
         var like: Boolean
 ) {
-        @PrimaryKey(autoGenerate = true) var id: Int = 1
+        @PrimaryKey(autoGenerate = true) var id: Int = 0
 }
