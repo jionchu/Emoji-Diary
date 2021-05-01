@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_daily_empty">오늘의 기분을 이모지로 표현해보세요.</string>
+    <string name="monthly_title_top">그 동안 내 기분은 어땠을까?</string>
+    <string name="monthly_title_bottom">한 눈에 살펴보기</string>
+</resources>
