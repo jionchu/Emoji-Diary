@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import org.techtest.emoji_diary.database.AppDatabase
 import org.techtest.emoji_diary.database.Diary
+import org.techtest.emoji_diary.database.Emoji
 
 /**
  * Created by jionchu on 2021-04-29
@@ -12,15 +13,24 @@ class DataRepository {
 
     private var mDatabase: AppDatabase
     private var mObservableDiaries: MediatorLiveData<List<Diary>>
+    private var mObservableEmojis: MediatorLiveData<List<Emoji>>
 
     constructor(database: AppDatabase) {
         mDatabase = database
         mObservableDiaries = MediatorLiveData()
+        mObservableEmojis = MediatorLiveData()
 
         mObservableDiaries.addSource(mDatabase.diaryDao().loadAll()) {
             diaries ->
             run {
                 mObservableDiaries.value = diaries
+            }
+        }
+
+        mObservableEmojis.addSource(mDatabase.emojiDao().loadAll()) {
+            emojis ->
+            run {
+                mObservableEmojis.value = emojis
             }
         }
     }
@@ -29,7 +39,7 @@ class DataRepository {
         return mObservableDiaries
     }
 
-    fun loadDiary(diaryId: Int): LiveData<Diary> {
+    fun loadDiary(diaryId: Int): Diary {
         return mDatabase.diaryDao().loadById(diaryId)
     }
 
@@ -43,6 +53,18 @@ class DataRepository {
 
     fun insertDiary(diary: Diary) {
         mDatabase.diaryDao().insertDiary(diary)
+    }
+
+    fun updateDiary(diary: Diary) {
+        mDatabase.diaryDao().updateDiary(diary)
+    }
+
+    fun getEmojis(): LiveData<List<Emoji>> {
+        return mObservableEmojis
+    }
+
+    fun insertEmoji(emoji: Emoji) {
+        mDatabase.emojiDao().insert(emoji)
     }
 
     companion object {

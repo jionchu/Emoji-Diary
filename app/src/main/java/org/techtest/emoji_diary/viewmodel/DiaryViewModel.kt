@@ -15,10 +15,16 @@ import java.lang.IllegalArgumentException
 class DiaryViewModel(private val repository: DataRepository): ViewModel() {
 
     val allDiaries: LiveData<List<Diary>> = repository.getDiaries()
+    val likeDiaries: LiveData<List<Diary>> = repository.loadByLike()
 
     fun insert(diary: Diary) = viewModelScope.launch {
         repository.insertDiary(diary)
     }
+
+    fun update(diary: Diary) = viewModelScope.launch {
+        repository.updateDiary(diary)
+    }
+
 }
 
 class DiaryViewModelFactory(private val repository: DataRepository): ViewModelProvider.Factory {

@@ -12,7 +12,7 @@ import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.adapter.DiaryAdapter.DiaryViewHolder
 import org.techtest.emoji_diary.database.Diary
 
-class DiaryAdapter() : ListAdapter<Diary, DiaryViewHolder>(DiaryComparator()) {
+class DiaryAdapter : ListAdapter<Diary, DiaryViewHolder>(DiaryComparator()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DiaryViewHolder {
         return DiaryViewHolder.create(viewGroup)
@@ -25,7 +25,7 @@ class DiaryAdapter() : ListAdapter<Diary, DiaryViewHolder>(DiaryComparator()) {
 
     class DiaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var ivImage: ImageView = itemView.findViewById(R.id.diary_image)
-        private var ivFavorite: ImageView = itemView.findViewById(R.id.button_heart)
+        private var ivLike: ImageView = itemView.findViewById(R.id.button_heart)
         private var tvTitle: TextView = itemView.findViewById(R.id.diary_title)
         private var tvDate: TextView = itemView.findViewById(R.id.diary_date)
 
@@ -33,6 +33,9 @@ class DiaryAdapter() : ListAdapter<Diary, DiaryViewHolder>(DiaryComparator()) {
             ivImage.setImageResource(diary.emojiRes)
             tvTitle.text = diary.title
             tvDate.text = diary.date
+
+            if (diary.like) ivLike.setImageResource(R.drawable.ic_favorite)
+            else ivLike.setImageResource(R.drawable.ic_favorite_border_unclicked)
         }
 
         companion object {

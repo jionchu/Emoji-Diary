@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
 /**
  * Created by jionchu on 2021-04-26
  */
-@Database(entities = [Emoji::class, Diary::class], version = 2)
+@Database(entities = [Emoji::class, Diary::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun emojiDao(): EmojiDao
     abstract fun diaryDao(): DiaryDao

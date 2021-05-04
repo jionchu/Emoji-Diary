@@ -10,4 +10,6 @@ import androidx.room.PrimaryKey
 data class Emoji(
         @PrimaryKey var id: Int,
         var image: Int
-)
+) {
+    var count: Int = 0
+}

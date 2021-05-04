@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity() {
         mTvMonthly = findViewById(R.id.txt_tab3)
 
         val database = MyApplication.sInstance!!
-        Log.d("MainActivity", database.emojiDao().getAll().size.toString())
+        Log.d("MainActivity", database.emojiDao().getRowCount().toString())
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("MainActivity", MyApplication.sInstance!!.emojiDao().getAll().size.toString())
+        Log.d("MainActivity", MyApplication.sInstance!!.emojiDao().getRowCount().toString())
         Log.d("MainActivity", MyApplication.sInstance!!.diaryDao().getRowCount().toString())
     }
 

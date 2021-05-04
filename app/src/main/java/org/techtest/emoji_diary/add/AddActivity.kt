@@ -6,12 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener
 import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.MyApplication.Companion.dateFormat
 import org.techtest.emoji_diary.R
+import org.techtest.emoji_diary.adapter.EmojiDialogAdapter
+import org.techtest.emoji_diary.database.AppDatabase
 import org.techtest.emoji_diary.database.Diary
+import org.techtest.emoji_diary.database.Emoji
 import org.techtest.emoji_diary.main.daily.MainDailyFragment
+import org.techtest.emoji_diary.viewmodel.EmojiViewModel
+import org.techtest.emoji_diary.viewmodel.EmojiViewModelFactory
 import java.util.*
+import java.util.concurrent.Executors
 
 class AddActivity : AppCompatActivity() {
 
@@ -23,12 +33,12 @@ class AddActivity : AppCompatActivity() {
     private lateinit var ivEmoji: ImageView
     private lateinit var tvDate: TextView
     private var diary: Diary? = null
-    private var position = 0
-    private var emoji = 0
+    private var emojiId = 1
     private var image = R.drawable.emoji1
     private var favorite = false
     private var date: Date? = null
     private var datePicker: DatePicker? = null
+    private lateinit var mEmojiViewModel: EmojiViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +50,20 @@ class AddActivity : AppCompatActivity() {
         etContent = findViewById(R.id.txt_content)
         ivEmoji = findViewById(R.id.img_emoji)
         tvDate = findViewById(R.id.txt_date)
-        position = intent.getIntExtra("position", -1)
+        val diaryId = intent.getIntExtra("diaryId", -1)
 
         date = MainDailyFragment.dateToday
         tvDate.text = MyApplication.dateStrFormat.format(date)
 
-        //TODO: edit diary already existed
+        Executors.newSingleThreadExecutor().execute {
+            diary = MyApplication.sRepository!!.loadDiary(diaryId)
+            etTitle.setText(diary!!.title)
+            etContent.setText(diary!!.content)
+            emojiId = diary!!.emojiId
+            image = diary!!.emojiRes
+            ivEmoji.setImageResource(image)
+            tvDate.text = diary!!.date
+        }
 
         tvDate.setOnClickListener {
             val datepickerBuilder = AlertDialog.Builder(this@AddActivity)
@@ -72,161 +90,32 @@ class AddActivity : AppCompatActivity() {
             val view = LayoutInflater.from(applicationContext).inflate(R.layout.emoji_dialog, null, false)
             builder.setView(view)
             val dialog = builder.create()
-            view.findViewById<View>(R.id.emoji1).setOnClickListener {
-                emoji = 1
-                ivEmoji.setImageResource(R.drawable.emoji1)
-                dialog.dismiss()
+            val recyclerView: RecyclerView = view.findViewById(R.id.emoji_dialog_recycler_view)
+            recyclerView.layoutManager = GridLayoutManager(this, 6)
+            val dialogAdapter = EmojiDialogAdapter()
+            recyclerView.adapter = dialogAdapter
+
+            val factory = EmojiViewModelFactory(
+                    MyApplication.sRepository!!
+            )
+            mEmojiViewModel = ViewModelProvider(this, factory).get(EmojiViewModel::class.java)
+            mEmojiViewModel.allEmojis.observe(this) { emojis ->
+                run {
+                    emojis.let { dialogAdapter.submitList(it) }
+                }
             }
-            view.findViewById<View>(R.id.emoji2).setOnClickListener {
-                emoji = 2
-                ivEmoji.setImageResource(R.drawable.emoji2)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji3).setOnClickListener {
-                emoji = 3
-                ivEmoji.setImageResource(R.drawable.emoji3)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji4).setOnClickListener {
-                emoji = 4
-                ivEmoji.setImageResource(R.drawable.emoji4)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji5).setOnClickListener {
-                emoji = 5
-                ivEmoji.setImageResource(R.drawable.emoji5)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji6).setOnClickListener {
-                emoji = 6
-                ivEmoji.setImageResource(R.drawable.emoji6)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji7).setOnClickListener {
-                emoji = 7
-                ivEmoji.setImageResource(R.drawable.emoji7)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji8).setOnClickListener {
-                emoji = 8
-                ivEmoji.setImageResource(R.drawable.emoji8)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji9).setOnClickListener {
-                emoji = 9
-                ivEmoji.setImageResource(R.drawable.emoji9)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji10).setOnClickListener {
-                emoji = 10
-                ivEmoji.setImageResource(R.drawable.emoji10)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji11).setOnClickListener {
-                emoji = 11
-                ivEmoji.setImageResource(R.drawable.emoji11)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji12).setOnClickListener {
-                emoji = 12
-                ivEmoji.setImageResource(R.drawable.emoji12)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji13).setOnClickListener {
-                emoji = 13
-                ivEmoji.setImageResource(R.drawable.emoji13)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji14).setOnClickListener {
-                emoji = 14
-                ivEmoji.setImageResource(R.drawable.emoji14)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji15).setOnClickListener {
-                emoji = 15
-                ivEmoji.setImageResource(R.drawable.emoji15)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji16).setOnClickListener {
-                emoji = 16
-                ivEmoji.setImageResource(R.drawable.emoji16)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji17).setOnClickListener {
-                emoji = 17
-                ivEmoji.setImageResource(R.drawable.emoji17)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji18).setOnClickListener {
-                emoji = 18
-                ivEmoji.setImageResource(R.drawable.emoji18)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji19).setOnClickListener {
-                emoji = 19
-                ivEmoji.setImageResource(R.drawable.emoji19)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji20).setOnClickListener {
-                emoji = 20
-                ivEmoji.setImageResource(R.drawable.emoji20)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji21).setOnClickListener {
-                emoji = 21
-                ivEmoji.setImageResource(R.drawable.emoji21)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji22).setOnClickListener {
-                emoji = 22
-                ivEmoji.setImageResource(R.drawable.emoji22)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji23).setOnClickListener {
-                emoji = 23
-                ivEmoji.setImageResource(R.drawable.emoji23)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji24).setOnClickListener {
-                emoji = 24
-                ivEmoji.setImageResource(R.drawable.emoji24)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji25).setOnClickListener {
-                emoji = 25
-                ivEmoji.setImageResource(R.drawable.emoji25)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji26).setOnClickListener {
-                emoji = 26
-                ivEmoji.setImageResource(R.drawable.emoji26)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji27).setOnClickListener {
-                emoji = 27
-                ivEmoji.setImageResource(R.drawable.emoji27)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji28).setOnClickListener {
-                emoji = 28
-                ivEmoji.setImageResource(R.drawable.emoji28)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji29).setOnClickListener {
-                emoji = 29
-                ivEmoji.setImageResource(R.drawable.emoji29)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji30).setOnClickListener {
-                emoji = 30
-                ivEmoji.setImageResource(R.drawable.emoji30)
-                dialog.dismiss()
-            }
-            view.findViewById<View>(R.id.emoji31).setOnClickListener {
-                emoji = 31
-                ivEmoji.setImageResource(R.drawable.emoji31)
-                dialog.dismiss()
-            }
+            recyclerView.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView)
+                    .setClickable(object : RecyclerTouchListener.OnRowClickListener {
+                        override fun onRowClicked(position: Int) {
+                            val emoji: Emoji = mEmojiViewModel.allEmojis.value!![position]
+                            emojiId = emoji.id
+                            image = emoji.image
+                            ivEmoji.setImageResource(image)
+                            dialog.dismiss()
+                        }
+                        override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
+                    }))
+
             dialog.show()
         }
 
@@ -237,8 +126,16 @@ class AddActivity : AppCompatActivity() {
                 title.trim { it <= ' ' } == "" -> etTitle.error = "제목을 입력하세요."
                 content.trim { it <= ' ' } == "" -> etContent.error = "내용을 입력하세요."
                 else -> {
-                    MyApplication.sInstance!!.diaryDao().insertDiary(Diary(dateFormat.format(date).toString(), 1, R.drawable.emoji1, title, content, false))
-                    //TODO: diary update
+                    if (diaryId == -1) {
+                        MyApplication.sInstance!!.diaryDao().insertDiary(Diary(dateFormat.format(date).toString(), emojiId, image, title, content, false))
+                    } else {
+                        diary!!.title = title
+                        diary!!.content = content
+                        diary!!.emojiId = emojiId
+                        diary!!.emojiRes = image
+                        diary!!.date = dateFormat.format(date)
+                        MyApplication.sInstance!!.diaryDao().updateDiary(diary!!)
+                    }
                     finish()
                 }
             }

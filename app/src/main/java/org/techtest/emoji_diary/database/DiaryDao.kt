@@ -12,7 +12,7 @@ interface DiaryDao {
     fun loadAll(): LiveData<List<Diary>>
 
     @Query("SELECT * FROM diary WHERE id = (:diaryId)")
-    fun loadById(diaryId: Int): LiveData<Diary>
+    fun loadById(diaryId: Int): Diary
 
     @Query("SELECT * FROM diary WHERE `like` = (:likeState)")
     fun loadByLike(likeState: Boolean): LiveData<List<Diary>>

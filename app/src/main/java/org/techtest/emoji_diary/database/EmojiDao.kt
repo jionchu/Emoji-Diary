@@ -1,5 +1,6 @@
 package org.techtest.emoji_diary.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -10,10 +11,13 @@ import androidx.room.Query
 @Dao
 interface EmojiDao {
     @Query("SELECT * FROM emoji")
-    fun getAll(): List<Emoji>
+    fun loadAll(): LiveData<List<Emoji>>
 
     @Query("SELECT * FROM emoji WHERE id in (:emojiId)")
-    fun loadByIds(emojiId: IntArray): List<Emoji>
+    fun loadByIds(emojiId: IntArray): LiveData<List<Emoji>>
+
+    @Query("SELECT COUNT(id) from emoji")
+    fun getRowCount(): Int
 
     @Insert
     fun insert(emoji: Emoji)
