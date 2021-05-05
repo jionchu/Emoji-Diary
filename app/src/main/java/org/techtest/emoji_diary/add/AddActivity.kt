@@ -14,7 +14,6 @@ import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.MyApplication.Companion.dateFormat
 import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.adapter.EmojiDialogAdapter
-import org.techtest.emoji_diary.database.AppDatabase
 import org.techtest.emoji_diary.database.Diary
 import org.techtest.emoji_diary.database.Emoji
 import org.techtest.emoji_diary.main.daily.MainDailyFragment
@@ -35,7 +34,6 @@ class AddActivity : AppCompatActivity() {
     private var diary: Diary? = null
     private var emojiId = 1
     private var image = R.drawable.emoji1
-    private var favorite = false
     private var date: Date? = null
     private var datePicker: DatePicker? = null
     private lateinit var mEmojiViewModel: EmojiViewModel

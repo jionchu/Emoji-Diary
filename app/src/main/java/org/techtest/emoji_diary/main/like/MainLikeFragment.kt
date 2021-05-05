@@ -50,13 +50,13 @@ class MainLikeFragment : androidx.fragment.app.Fragment() {
                 .setClickable(object : OnRowClickListener {
                     override fun onRowClicked(position: Int) {
                         val intent = Intent(activity, AddActivity::class.java)
-                        intent.putExtra("position", position)
+                        intent.putExtra("diaryId", diaryViewModel.likeDiaries.value!![position].id)
                         startActivity(intent)
                     }
 
                     override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
                 }).setSwipeOptionViews(R.id.button_heart, R.id.button_delete).setSwipeable(R.id.item_fg, R.id.item_bg) { viewID, position ->
-                    val original: Diary = diaryViewModel.allDiaries.value!![position]
+                    val original: Diary = diaryViewModel.likeDiaries.value!![position]
                     if (viewID == R.id.button_heart) {
                         original.like = !original.like
                         diaryViewModel.update(original)

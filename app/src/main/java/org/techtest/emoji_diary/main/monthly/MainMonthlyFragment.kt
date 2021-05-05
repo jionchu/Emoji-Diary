@@ -46,7 +46,11 @@ class MainMonthlyFragment : androidx.fragment.app.Fragment() {
         onTouchListener = RecyclerTouchListener(activity, recyclerView)
                 .setClickable(object : OnRowClickListener {
                     override fun onRowClicked(position: Int) {
-                        val mainEmojiFragment: MainEmojiFragment = MainEmojiFragment.newInstance(position)
+                        val mainEmojiFragment: MainEmojiFragment = MainEmojiFragment
+                                .newInstance(
+                                        mEmojiViewModel.allEmojis.value!![position].id,
+                                        mEmojiViewModel.allEmojis.value!![position].image
+                                )
                         transaction = activity!!.supportFragmentManager.beginTransaction()
                         transaction.replace(R.id.container, mainEmojiFragment).addToBackStack("tab3")
                         transaction.commit()

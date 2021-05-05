@@ -16,6 +16,12 @@ class DiaryViewModel(private val repository: DataRepository): ViewModel() {
 
     val allDiaries: LiveData<List<Diary>> = repository.getDiaries()
     val likeDiaries: LiveData<List<Diary>> = repository.loadByLike()
+    lateinit var emojiDiaries: LiveData<List<Diary>>
+
+    fun loadByEmoji(emojiId: Int): LiveData<List<Diary>> {
+        emojiDiaries = repository.loadByEmoji(emojiId)
+        return emojiDiaries
+    }
 
     fun insert(diary: Diary) = viewModelScope.launch {
         repository.insertDiary(diary)

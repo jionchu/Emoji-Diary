@@ -9,122 +9,86 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener.OnRowClickListener
+import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.adapter.FavoriteAdapter
+import org.techtest.emoji_diary.adapter.DiaryAdapter
 import org.techtest.emoji_diary.add.AddActivity
-import org.techtest.emoji_diary.main.MainActivity
-import java.util.*
+import org.techtest.emoji_diary.database.Diary
+import org.techtest.emoji_diary.viewmodel.DiaryViewModel
+import org.techtest.emoji_diary.viewmodel.DiaryViewModelFactory
 
 class MainEmojiFragment : androidx.fragment.app.Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: RecyclerView.Adapter<*>
-    private lateinit var onTouchListener: RecyclerTouchListener
-    private lateinit var diaryArrayList: ArrayList<Int>
-    private lateinit var tvCount: TextView
-    private lateinit var ivEmoji: ImageView
-    private lateinit var txtCount: String
-    private var position = 0
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mOnTouchListener: RecyclerTouchListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_emoji, container, false)
-        position = arguments!!.getInt("position")
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
-        recyclerView = view.findViewById(R.id.diary_recycler_view)
-        recyclerView.layoutManager = layoutManager
-        diaryArrayList = MainActivity.emojiList[position + 1]!!
-        tvCount = view.findViewById(R.id.txt_count)
-        ivEmoji = view.findViewById(R.id.emoji_image)
-        when (position + 1) {
-            1 -> ivEmoji.setImageResource(R.drawable.emoji1)
-            2 -> ivEmoji.setImageResource(R.drawable.emoji2)
-            3 -> ivEmoji.setImageResource(R.drawable.emoji3)
-            4 -> ivEmoji.setImageResource(R.drawable.emoji4)
-            5 -> ivEmoji.setImageResource(R.drawable.emoji5)
-            6 -> ivEmoji.setImageResource(R.drawable.emoji6)
-            7 -> ivEmoji.setImageResource(R.drawable.emoji7)
-            8 -> ivEmoji.setImageResource(R.drawable.emoji8)
-            9 -> ivEmoji.setImageResource(R.drawable.emoji9)
-            10 -> ivEmoji.setImageResource(R.drawable.emoji10)
-            11 -> ivEmoji.setImageResource(R.drawable.emoji11)
-            12 -> ivEmoji.setImageResource(R.drawable.emoji12)
-            13 -> ivEmoji.setImageResource(R.drawable.emoji13)
-            14 -> ivEmoji.setImageResource(R.drawable.emoji14)
-            15 -> ivEmoji.setImageResource(R.drawable.emoji15)
-            16 -> ivEmoji.setImageResource(R.drawable.emoji16)
-            17 -> ivEmoji.setImageResource(R.drawable.emoji17)
-            18 -> ivEmoji.setImageResource(R.drawable.emoji18)
-            19 -> ivEmoji.setImageResource(R.drawable.emoji19)
-            20 -> ivEmoji.setImageResource(R.drawable.emoji20)
-            21 -> ivEmoji.setImageResource(R.drawable.emoji21)
-            22 -> ivEmoji.setImageResource(R.drawable.emoji22)
-            23 -> ivEmoji.setImageResource(R.drawable.emoji23)
-            24 -> ivEmoji.setImageResource(R.drawable.emoji24)
-            25 -> ivEmoji.setImageResource(R.drawable.emoji25)
-            26 -> ivEmoji.setImageResource(R.drawable.emoji26)
-            27 -> ivEmoji.setImageResource(R.drawable.emoji27)
-            28 -> ivEmoji.setImageResource(R.drawable.emoji28)
-            29 -> ivEmoji.setImageResource(R.drawable.emoji29)
-            30 -> ivEmoji.setImageResource(R.drawable.emoji30)
-            31 -> ivEmoji.setImageResource(R.drawable.emoji31)
+
+        val tvCount: TextView = view.findViewById(R.id.txt_count)
+        val ivEmoji: ImageView = view.findViewById(R.id.emoji_image)
+        ivEmoji.setImageResource(arguments!!.getInt("emojiRes"))
+        val emojiId = arguments!!.getInt("emojiId")
+
+        val diaryAdapter = DiaryAdapter()
+        mRecyclerView = view.findViewById(R.id.diary_recycler_view)
+        mRecyclerView.layoutManager = LinearLayoutManager(activity)
+        mRecyclerView.adapter = diaryAdapter
+
+        val factory = DiaryViewModelFactory(
+                MyApplication.sRepository!!
+        )
+        val diaryViewModel: DiaryViewModel = ViewModelProvider(this, factory).get(DiaryViewModel::class.java)
+        diaryViewModel.loadByEmoji(emojiId).observe(viewLifecycleOwner) { diaries ->
+            run {
+                diaries.let { diaryAdapter.submitList(it) }
+                val strCount = "(${diaries.size})"
+                tvCount.text = strCount
+            }
         }
-        onTouchListener = RecyclerTouchListener(activity, recyclerView)
+
+        mOnTouchListener = RecyclerTouchListener(activity, mRecyclerView)
                 .setClickable(object : OnRowClickListener {
                     override fun onRowClicked(position: Int) {
                         val intent = Intent(activity, AddActivity::class.java)
-                        intent.putExtra("position", diaryArrayList[position])
+                        intent.putExtra("diaryId", diaryViewModel.emojiDiaries.value!![position].id)
                         startActivity(intent)
                     }
 
                     override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
                 }).setSwipeOptionViews(R.id.button_heart, R.id.button_delete).setSwipeable(R.id.item_fg, R.id.item_bg) { viewID, position ->
+                    val original: Diary = diaryViewModel.allDiaries.value!![position]
                     if (viewID == R.id.button_heart) {
-                        if (MainActivity.diaryArrayList[diaryArrayList[position]].favorite) {
-                            MainActivity.diaryArrayList[diaryArrayList[position]].favorite = false
-                            MainActivity.favoriteList.removeAt(MainActivity.favoriteList.indexOf(diaryArrayList[position]))
-                        } else {
-                            MainActivity.diaryArrayList[diaryArrayList[position]].favorite = false
-                            MainActivity.favoriteList.add(diaryArrayList[position])
-                        }
-                        adapter = FavoriteAdapter(context, diaryArrayList)
-                        recyclerView.adapter = adapter
+                        original.like = !original.like
+                        diaryViewModel.update(original)
                     } else if (viewID == R.id.button_delete) {
-                        val diaryPosition = diaryArrayList[position]
-                        MainActivity.diaryArrayList.removeAt(diaryPosition)
-                        if (MainActivity.favoriteList.contains(diaryPosition)) MainActivity.favoriteList.removeAt(MainActivity.favoriteList.indexOf(diaryPosition))
-                        diaryArrayList.removeAt(position)
-                        adapter = FavoriteAdapter(context, diaryArrayList)
-                        recyclerView.adapter = adapter
-                        txtCount = "(" + diaryArrayList.size + ")"
-                        tvCount.text = txtCount
+                        MyApplication.sInstance!!.diaryDao().deleteDiary(original)
                     }
                 }
+
         return view
     }
 
     override fun onResume() {
         super.onResume()
-        recyclerView.addOnItemTouchListener(onTouchListener)
-        diaryArrayList = MainActivity.emojiList[position + 1]!!
-        adapter = FavoriteAdapter(context, diaryArrayList)
-        recyclerView.adapter = adapter
-        txtCount = "(" + diaryArrayList.size + ")"
-        tvCount.text = txtCount
+        mRecyclerView.addOnItemTouchListener(mOnTouchListener)
     }
 
     override fun onPause() {
         super.onPause()
-        recyclerView.removeOnItemTouchListener(onTouchListener)
+        mRecyclerView.removeOnItemTouchListener(mOnTouchListener)
     }
 
     companion object {
-        fun newInstance(param1: Int): MainEmojiFragment {
+        fun newInstance(param1: Int, param2: Int): MainEmojiFragment {
             val fragment = MainEmojiFragment()
             val args = Bundle()
-            args.putInt("position", param1)
+            args.putInt("emojiId", param1)
+            args.putInt("emojiRes", param2)
             fragment.arguments = args
             return fragment
         }
