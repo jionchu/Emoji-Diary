@@ -62,6 +62,7 @@ class MainLikeFragment : androidx.fragment.app.Fragment() {
                         diaryViewModel.update(original)
                     } else if (viewID == R.id.button_delete) {
                         MyApplication.sInstance!!.diaryDao().deleteDiary(original)
+                        MyApplication.sInstance!!.emojiDao().decreaseCount(original.emojiId)
                     }
                 }
 
