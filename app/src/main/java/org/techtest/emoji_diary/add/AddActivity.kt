@@ -53,14 +53,16 @@ class AddActivity : AppCompatActivity() {
         date = MainDailyFragment.dateToday
         tvDate.text = MyApplication.dateStrFormat.format(date)
 
-        Executors.newSingleThreadExecutor().execute {
-            diary = MyApplication.sRepository!!.loadDiary(diaryId)
-            etTitle.setText(diary!!.title)
-            etContent.setText(diary!!.content)
-            emojiId = diary!!.emojiId
-            image = diary!!.emojiRes
-            ivEmoji.setImageResource(image)
-            tvDate.text = diary!!.date
+        if (diaryId != -1) {
+            Executors.newSingleThreadExecutor().execute {
+                diary = MyApplication.sRepository!!.loadDiary(diaryId)
+                etTitle.setText(diary!!.title)
+                etContent.setText(diary!!.content)
+                emojiId = diary!!.emojiId
+                image = diary!!.emojiRes
+                ivEmoji.setImageResource(image)
+                tvDate.text = diary!!.date
+            }
         }
 
         tvDate.setOnClickListener {
@@ -126,13 +128,16 @@ class AddActivity : AppCompatActivity() {
                 else -> {
                     if (diaryId == -1) {
                         MyApplication.sInstance!!.diaryDao().insertDiary(Diary(dateFormat.format(date).toString(), emojiId, image, title, content, false))
+                        MyApplication.sInstance!!.emojiDao().increaseCount(emojiId)
                     } else {
+                        MyApplication.sInstance!!.emojiDao().decreaseCount(diary!!.emojiId)
                         diary!!.title = title
                         diary!!.content = content
                         diary!!.emojiId = emojiId
                         diary!!.emojiRes = image
                         diary!!.date = dateFormat.format(date)
                         MyApplication.sInstance!!.diaryDao().updateDiary(diary!!)
+                        MyApplication.sInstance!!.emojiDao().increaseCount(emojiId)
                     }
                     finish()
                 }
