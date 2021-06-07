@@ -8,16 +8,16 @@ import androidx.room.*
  */
 @Dao
 interface DiaryDao {
-    @Query("SELECT * FROM diary")
+    @Query("SELECT * FROM diary ORDER BY date DESC")
     fun loadAll(): LiveData<List<Diary>>
 
-    @Query("SELECT * FROM diary WHERE id = (:diaryId)")
+    @Query("SELECT * FROM diary WHERE id = (:diaryId) ORDER BY date DESC")
     fun loadById(diaryId: Int): Diary
 
-    @Query("SELECT * FROM diary WHERE `like` = (:likeState)")
+    @Query("SELECT * FROM diary WHERE `like` = (:likeState) ORDER BY date DESC")
     fun loadByLike(likeState: Boolean): LiveData<List<Diary>>
 
-    @Query("SELECT * FROM diary WHERE emojiId = (:emojiId)")
+    @Query("SELECT * FROM diary WHERE emojiId = (:emojiId) ORDER BY date DESC")
     fun loadByEmoji(emojiId: Int): LiveData<List<Diary>>
 
     @Query("SELECT COUNT(id) from diary")

@@ -50,23 +50,6 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity", MyApplication.sInstance!!.diaryDao().getRowCount().toString())
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        for (i in 0..30) emojiList[i + 1] = ArrayList()
-
-        for (i in diaryArrayList.indices) {
-            if (diaryArrayList[i].favorite) {
-                favoriteList.add(i)
-            }
-            val emoji = diaryArrayList[i].image
-            var list = emojiList[emoji]
-            if (list == null) list = ArrayList()
-            list.add(i)
-            emojiList[emoji] = list
-        }
-    }
-
     fun customOnClick(view: View) {
         when (view.id) {
             R.id.button_tab1 -> {
@@ -103,11 +86,5 @@ class MainActivity : AppCompatActivity() {
                 mTvMonthly.setTextColor(Color.rgb(255, 255, 255))
             }
         }
-    }
-
-    companion object {
-        val diaryArrayList: ArrayList<Diary> = ArrayList()
-        var favoriteList: ArrayList<Int> = ArrayList()
-        var emojiList: HashMap<Int, ArrayList<Int>> = HashMap()
     }
 }
