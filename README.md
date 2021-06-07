@@ -7,6 +7,13 @@
 2. 좋아요 한 일기를 모아 볼 수 있습니다.
 3. 이모지별 일기 개수를 확인하고 모아 볼 수 있습니다.
 
+## :camera: Screenshots
+<img alt="Screenshot1" src="images/screenshot1.jpg" width="30%"> <img alt="Screenshot2" src="images/screenshot2.jpg" width="30%"> <img alt="Screenshot3" src="images/screenshot3.jpg" width="30%">
+
+<img alt="Screenshot4" src="images/screenshot4.jpg" width="30%"> <img alt="Screenshot5" src="images/screenshot5.jpg" width="30%"> <img alt="Screenshot6" src="images/screenshot6.jpg" width="30%">
+
+<img alt="Screenshot7" src="images/screenshot7.jpg" width="30%"> <img alt="Screenshot8" src="images/screenshot8.jpg" width="30%"> <img alt="Screenshot9" src="images/screenshot9.jpg" width="30%">
+
 ## :sparkles: Features
 |     Activity/Fragment    |                          Description                           |
 | :----------------------: | :------------------------------------------------------------: |
