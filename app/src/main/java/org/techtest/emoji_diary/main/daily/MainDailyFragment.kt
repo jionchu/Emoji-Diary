@@ -50,10 +50,7 @@ class MainDailyFragment : androidx.fragment.app.Fragment() {
             }
         }
 
-        dateToday = Date()
-
-        val strDate = "${dateToday!!.year}년 ${dateToday!!.month+1}월 ${dateToday!!.day}일"
-        tvDate.text = MyApplication.dateStrFormat.format(dateToday)
+        tvDate.text = MyApplication.dateStrFormat.format(Date())
 
         if (MyApplication.sInstance!!.diaryDao().getRowCount() > 0)
             tvDefault.visibility = View.GONE
@@ -95,9 +92,5 @@ class MainDailyFragment : androidx.fragment.app.Fragment() {
     override fun onPause() {
         super.onPause()
         recyclerView.removeOnItemTouchListener(onTouchListener)
-    }
-
-    companion object {
-        var dateToday: Date? = null
     }
 }

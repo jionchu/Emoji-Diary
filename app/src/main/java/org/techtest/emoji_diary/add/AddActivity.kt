@@ -16,7 +16,6 @@ import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.adapter.EmojiDialogAdapter
 import org.techtest.emoji_diary.database.Diary
 import org.techtest.emoji_diary.database.Emoji
-import org.techtest.emoji_diary.main.daily.MainDailyFragment
 import org.techtest.emoji_diary.viewmodel.EmojiViewModel
 import org.techtest.emoji_diary.viewmodel.EmojiViewModelFactory
 import java.util.*
@@ -50,10 +49,12 @@ class AddActivity : AppCompatActivity() {
         tvDate = findViewById(R.id.txt_date)
         val diaryId = intent.getIntExtra("diaryId", -1)
 
-        date = MainDailyFragment.dateToday
+        date = Date()
         tvDate.text = MyApplication.dateStrFormat.format(date)
 
+        //리스트의 일기를 선택해 들어온 경우
         if (diaryId != -1) {
+            //해당 인덱스의 일기 데이터 불러오기
             Executors.newSingleThreadExecutor().execute {
                 diary = MyApplication.sRepository!!.loadDiary(diaryId)
                 etTitle.setText(diary!!.title)
@@ -61,31 +62,44 @@ class AddActivity : AppCompatActivity() {
                 emojiId = diary!!.emojiId
                 image = diary!!.emojiRes
                 ivEmoji.setImageResource(image)
-                tvDate.text = diary!!.date
+                date = dateFormat.parse(diary!!.date)
+                tvDate.text = MyApplication.dateStrFormat.format(date)
             }
         }
 
+
+        //날짜 클릭 시
         tvDate.setOnClickListener {
-            val datepickerBuilder = AlertDialog.Builder(this@AddActivity)
-            val datepickerView = LayoutInflater.from(applicationContext).inflate(R.layout.date_picker_dialog, null, false)
-            datepickerBuilder.setView(datepickerView)
-            val datepickerDialog = datepickerBuilder.create()
-            datePicker = datepickerView.findViewById<View>(R.id.date_picker) as DatePicker
-            datepickerView.findViewById<View>(R.id.datepicker_dialog_submit).setOnClickListener {
+            //날짜 선택 다이얼로그 생성
+            val datePickerBuilder = AlertDialog.Builder(this@AddActivity)
+            val datePickerView = LayoutInflater.from(applicationContext).inflate(R.layout.date_picker_dialog, null, false)
+            datePickerBuilder.setView(datePickerView)
+            val datePickerDialog = datePickerBuilder.create()
+            datePicker = datePickerView.findViewById<View>(R.id.date_picker) as DatePicker
+
+            //완료 버튼 클릭 시
+            datePickerView.findViewById<View>(R.id.datepicker_dialog_submit).setOnClickListener {
+                //선택되어 있는 값들 저장
                 val year = datePicker!!.year
                 val month = datePicker!!.month
                 val day = datePicker!!.dayOfMonth
-                date!!.year = year
-                date!!.date = day
+                date!!.year = year-1900
                 date!!.month = month
-                tvDate.text = year.toString() + "년 " + (month + 1) + "월 " + day + "일"
-                datepickerDialog.dismiss()
+                date!!.date = day
+                tvDate.text = MyApplication.dateStrFormat.format(date)
+                datePickerDialog.dismiss()
             }
-            datepickerView.findViewById<View>(R.id.button_close).setOnClickListener { datepickerDialog.dismiss() }
-            datepickerDialog.show()
+
+            //닫기 버튼 클릭 시 다이얼로그 닫기
+            datePickerView.findViewById<View>(R.id.button_close).setOnClickListener { datePickerDialog.dismiss() }
+
+            //다이얼로그 띄우기
+            datePickerDialog.show()
         }
 
+        //이모지 클릭 시
         layoutEmoji.setOnClickListener {
+            //이모지 선택 다이얼로그 생성
             val builder = AlertDialog.Builder(this@AddActivity)
             val view = LayoutInflater.from(applicationContext).inflate(R.layout.emoji_dialog, null, false)
             builder.setView(view)
@@ -104,46 +118,66 @@ class AddActivity : AppCompatActivity() {
                     emojis.let { dialogAdapter.submitList(it) }
                 }
             }
+
+            //이모지 선택 이벤트 리스너 설정
             recyclerView.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView)
                     .setClickable(object : RecyclerTouchListener.OnRowClickListener {
+                        //다이얼로그의 이모지 선택 시
                         override fun onRowClicked(position: Int) {
                             val emoji: Emoji = mEmojiViewModel.allEmojis.value!![position]
                             emojiId = emoji.id
                             image = emoji.image
                             ivEmoji.setImageResource(image)
+
+                            //다이얼로그 닫기
                             dialog.dismiss()
                         }
                         override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
                     }))
 
+            //다이얼로그 띄우기
             dialog.show()
         }
 
+        //완료 버튼 클릭 시
         btnDone.setOnClickListener {
             val title = etTitle.text.toString()
             val content = etContent.text.toString()
             when {
+                //제목을 입력하지 않은 경우
                 title.trim { it <= ' ' } == "" -> etTitle.error = "제목을 입력하세요."
+                //내용을 입력하지 않은 경우
                 content.trim { it <= ' ' } == "" -> etContent.error = "내용을 입력하세요."
+
                 else -> {
+                    //일기 추가
                     if (diaryId == -1) {
                         MyApplication.sInstance!!.diaryDao().insertDiary(Diary(dateFormat.format(date).toString(), emojiId, image, title, content, false))
                         MyApplication.sInstance!!.emojiDao().increaseCount(emojiId)
-                    } else {
+                    }
+                    //일기 수정
+                    else {
+                        //원래 일기에서 사용한 이모지 count 개수 감소
                         MyApplication.sInstance!!.emojiDao().decreaseCount(diary!!.emojiId)
+
+                        //원래 일기 데이터 수정
                         diary!!.title = title
                         diary!!.content = content
                         diary!!.emojiId = emojiId
                         diary!!.emojiRes = image
                         diary!!.date = dateFormat.format(date)
+
+                        //새로운 데이터로 업데이트
                         MyApplication.sInstance!!.diaryDao().updateDiary(diary!!)
                         MyApplication.sInstance!!.emojiDao().increaseCount(emojiId)
                     }
+
                     finish()
                 }
             }
         }
 
+        //뒤로가기 버튼 클릭 시
         btnBack.setOnClickListener { finish() }
     }
 }
