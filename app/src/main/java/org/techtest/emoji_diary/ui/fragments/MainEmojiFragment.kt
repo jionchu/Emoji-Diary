@@ -1,4 +1,4 @@
-package org.techtest.emoji_diary.main.monthly
+package org.techtest.emoji_diary.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,9 +14,9 @@ import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener.OnRowClickListener
 import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.adapter.DiaryAdapter
-import org.techtest.emoji_diary.add.AddActivity
-import org.techtest.emoji_diary.database.Diary
+import org.techtest.emoji_diary.ui.adapters.DiaryAdapter
+import org.techtest.emoji_diary.ui.AddActivity
+import org.techtest.emoji_diary.database.entity.DiaryEntity
 import org.techtest.emoji_diary.viewmodel.DiaryViewModel
 import org.techtest.emoji_diary.viewmodel.DiaryViewModelFactory
 
@@ -61,7 +61,7 @@ class MainEmojiFragment : androidx.fragment.app.Fragment() {
 
                     override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
                 }).setSwipeOptionViews(R.id.button_heart, R.id.button_delete).setSwipeable(R.id.item_fg, R.id.item_bg) { viewID, position ->
-                    val original: Diary = diaryViewModel.allDiaries.value!![position]
+                    val original: DiaryEntity = diaryViewModel.allDiaries.value!![position]
                     if (viewID == R.id.button_heart) {
                         original.like = !original.like
                         diaryViewModel.update(original)

@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.techtest.emoji_diary.DataRepository
-import org.techtest.emoji_diary.database.Diary
-import org.techtest.emoji_diary.database.Emoji
+import org.techtest.emoji_diary.database.entity.EmojiEntity
 import java.lang.IllegalArgumentException
 
 /**
@@ -15,9 +14,9 @@ import java.lang.IllegalArgumentException
  */
 class EmojiViewModel(private val repository: DataRepository): ViewModel() {
 
-    val allEmojis: LiveData<List<Emoji>> = repository.getEmojis()
+    val allEmojis: LiveData<List<EmojiEntity>> = repository.getEmojis()
 
-    fun insert(emoji: Emoji) = viewModelScope.launch {
+    fun insert(emoji: EmojiEntity) = viewModelScope.launch {
         repository.insertEmoji(emoji)
     }
 }

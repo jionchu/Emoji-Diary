@@ -1,4 +1,4 @@
-package org.techtest.emoji_diary.add
+package org.techtest.emoji_diary.ui
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,9 +13,9 @@ import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener
 import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.MyApplication.Companion.dateFormat
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.adapter.EmojiDialogAdapter
-import org.techtest.emoji_diary.database.Diary
-import org.techtest.emoji_diary.database.Emoji
+import org.techtest.emoji_diary.ui.adapters.EmojiDialogAdapter
+import org.techtest.emoji_diary.database.entity.DiaryEntity
+import org.techtest.emoji_diary.database.entity.EmojiEntity
 import org.techtest.emoji_diary.viewmodel.EmojiViewModel
 import org.techtest.emoji_diary.viewmodel.EmojiViewModelFactory
 import java.util.*
@@ -30,7 +30,7 @@ class AddActivity : AppCompatActivity() {
     private lateinit var etContent: EditText
     private lateinit var ivEmoji: ImageView
     private lateinit var tvDate: TextView
-    private var diary: Diary? = null
+    private var diary: DiaryEntity? = null
     private var emojiId = 1
     private var image = R.drawable.emoji1
     private var date: Date? = null
@@ -124,7 +124,7 @@ class AddActivity : AppCompatActivity() {
                     .setClickable(object : RecyclerTouchListener.OnRowClickListener {
                         //다이얼로그의 이모지 선택 시
                         override fun onRowClicked(position: Int) {
-                            val emoji: Emoji = mEmojiViewModel.allEmojis.value!![position]
+                            val emoji: EmojiEntity = mEmojiViewModel.allEmojis.value!![position]
                             emojiId = emoji.id
                             image = emoji.image
                             ivEmoji.setImageResource(image)
@@ -152,7 +152,7 @@ class AddActivity : AppCompatActivity() {
                 else -> {
                     //일기 추가
                     if (diaryId == -1) {
-                        MyApplication.sInstance!!.diaryDao().insertDiary(Diary(dateFormat.format(date).toString(), emojiId, image, title, content, false))
+                        MyApplication.sInstance!!.diaryDao().insertDiary(DiaryEntity(dateFormat.format(date).toString(), emojiId, image, title, content, false))
                         MyApplication.sInstance!!.emojiDao().increaseCount(emojiId)
                     }
                     //일기 수정

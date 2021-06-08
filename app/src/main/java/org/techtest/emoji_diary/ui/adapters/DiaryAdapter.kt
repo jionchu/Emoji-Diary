@@ -1,4 +1,4 @@
-package org.techtest.emoji_diary.adapter
+package org.techtest.emoji_diary.ui.adapters
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.adapter.DiaryAdapter.DiaryViewHolder
-import org.techtest.emoji_diary.database.Diary
+import org.techtest.emoji_diary.ui.adapters.DiaryAdapter.DiaryViewHolder
+import org.techtest.emoji_diary.database.entity.DiaryEntity
 
-class DiaryAdapter : ListAdapter<Diary, DiaryViewHolder>(DiaryComparator()) {
+class DiaryAdapter : ListAdapter<DiaryEntity, DiaryViewHolder>(DiaryComparator()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): DiaryViewHolder {
         return DiaryViewHolder.create(viewGroup)
@@ -29,7 +29,7 @@ class DiaryAdapter : ListAdapter<Diary, DiaryViewHolder>(DiaryComparator()) {
         private var tvTitle: TextView = itemView.findViewById(R.id.diary_title)
         private var tvDate: TextView = itemView.findViewById(R.id.diary_date)
 
-        fun bind(diary: Diary) {
+        fun bind(diary: DiaryEntity) {
             ivImage.setImageResource(diary.emojiRes)
             tvTitle.text = diary.title
             tvDate.text = diary.date
@@ -47,12 +47,12 @@ class DiaryAdapter : ListAdapter<Diary, DiaryViewHolder>(DiaryComparator()) {
         }
     }
 
-    class DiaryComparator: DiffUtil.ItemCallback<Diary>() {
-        override fun areItemsTheSame(oldItem: Diary, newItem: Diary): Boolean {
+    class DiaryComparator: DiffUtil.ItemCallback<DiaryEntity>() {
+        override fun areItemsTheSame(oldItem: DiaryEntity, newItem: DiaryEntity): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Diary, newItem: Diary): Boolean {
+        override fun areContentsTheSame(oldItem: DiaryEntity, newItem: DiaryEntity): Boolean {
             return oldItem.content == newItem.content
         }
     }

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.techtest.emoji_diary.DataRepository
-import org.techtest.emoji_diary.database.Diary
+import org.techtest.emoji_diary.database.entity.DiaryEntity
 import java.lang.IllegalArgumentException
 
 /**
@@ -14,20 +14,20 @@ import java.lang.IllegalArgumentException
  */
 class DiaryViewModel(private val repository: DataRepository): ViewModel() {
 
-    val allDiaries: LiveData<List<Diary>> = repository.getDiaries()
-    val likeDiaries: LiveData<List<Diary>> = repository.loadByLike()
-    lateinit var emojiDiaries: LiveData<List<Diary>>
+    val allDiaries: LiveData<List<DiaryEntity>> = repository.getDiaries()
+    val likeDiaries: LiveData<List<DiaryEntity>> = repository.loadByLike()
+    lateinit var emojiDiaries: LiveData<List<DiaryEntity>>
 
-    fun loadByEmoji(emojiId: Int): LiveData<List<Diary>> {
+    fun loadByEmoji(emojiId: Int): LiveData<List<DiaryEntity>> {
         emojiDiaries = repository.loadByEmoji(emojiId)
         return emojiDiaries
     }
 
-    fun insert(diary: Diary) = viewModelScope.launch {
+    fun insert(diary: DiaryEntity) = viewModelScope.launch {
         repository.insertDiary(diary)
     }
 
-    fun update(diary: Diary) = viewModelScope.launch {
+    fun update(diary: DiaryEntity) = viewModelScope.launch {
         repository.updateDiary(diary)
     }
 

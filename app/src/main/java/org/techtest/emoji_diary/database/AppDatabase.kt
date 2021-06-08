@@ -9,12 +9,16 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import org.techtest.emoji_diary.AppExecutors
 import org.techtest.emoji_diary.MyApplication.Companion.sInstance
 import org.techtest.emoji_diary.R
+import org.techtest.emoji_diary.database.dao.DiaryDao
+import org.techtest.emoji_diary.database.dao.EmojiDao
+import org.techtest.emoji_diary.database.entity.DiaryEntity
+import org.techtest.emoji_diary.database.entity.EmojiEntity
 import java.util.concurrent.Executors
 
 /**
  * Created by jionchu on 2021-04-26
  */
-@Database(entities = [Emoji::class, Diary::class], version = 3)
+@Database(entities = [EmojiEntity::class, DiaryEntity::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun emojiDao(): EmojiDao
     abstract fun diaryDao(): DiaryDao
@@ -56,38 +60,38 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         fun insertEmojiList(database: AppDatabase) {
-            val emojiList: List<Emoji> = listOf(
-                Emoji(1, R.drawable.emoji1),
-                Emoji(2, R.drawable.emoji2),
-                Emoji(3, R.drawable.emoji3),
-                Emoji(4, R.drawable.emoji4),
-                Emoji(5, R.drawable.emoji5),
-                Emoji(6, R.drawable.emoji6),
-                Emoji(7, R.drawable.emoji7),
-                Emoji(8, R.drawable.emoji8),
-                Emoji(9, R.drawable.emoji9),
-                Emoji(10, R.drawable.emoji10),
-                Emoji(11, R.drawable.emoji11),
-                Emoji(12, R.drawable.emoji12),
-                Emoji(13, R.drawable.emoji13),
-                Emoji(14, R.drawable.emoji14),
-                Emoji(15, R.drawable.emoji15),
-                Emoji(16, R.drawable.emoji16),
-                Emoji(17, R.drawable.emoji17),
-                Emoji(18, R.drawable.emoji18),
-                Emoji(19, R.drawable.emoji19),
-                Emoji(20, R.drawable.emoji20),
-                Emoji(21, R.drawable.emoji21),
-                Emoji(22, R.drawable.emoji22),
-                Emoji(23, R.drawable.emoji23),
-                Emoji(24, R.drawable.emoji24),
-                Emoji(25, R.drawable.emoji25),
-                Emoji(26, R.drawable.emoji26),
-                Emoji(27, R.drawable.emoji27),
-                Emoji(28, R.drawable.emoji28),
-                Emoji(29, R.drawable.emoji29),
-                Emoji(30, R.drawable.emoji30),
-                Emoji(31, R.drawable.emoji31)
+            val emojiList: List<EmojiEntity> = listOf(
+                EmojiEntity(1, R.drawable.emoji1),
+                EmojiEntity(2, R.drawable.emoji2),
+                EmojiEntity(3, R.drawable.emoji3),
+                EmojiEntity(4, R.drawable.emoji4),
+                EmojiEntity(5, R.drawable.emoji5),
+                EmojiEntity(6, R.drawable.emoji6),
+                EmojiEntity(7, R.drawable.emoji7),
+                EmojiEntity(8, R.drawable.emoji8),
+                EmojiEntity(9, R.drawable.emoji9),
+                EmojiEntity(10, R.drawable.emoji10),
+                EmojiEntity(11, R.drawable.emoji11),
+                EmojiEntity(12, R.drawable.emoji12),
+                EmojiEntity(13, R.drawable.emoji13),
+                EmojiEntity(14, R.drawable.emoji14),
+                EmojiEntity(15, R.drawable.emoji15),
+                EmojiEntity(16, R.drawable.emoji16),
+                EmojiEntity(17, R.drawable.emoji17),
+                EmojiEntity(18, R.drawable.emoji18),
+                EmojiEntity(19, R.drawable.emoji19),
+                EmojiEntity(20, R.drawable.emoji20),
+                EmojiEntity(21, R.drawable.emoji21),
+                EmojiEntity(22, R.drawable.emoji22),
+                EmojiEntity(23, R.drawable.emoji23),
+                EmojiEntity(24, R.drawable.emoji24),
+                EmojiEntity(25, R.drawable.emoji25),
+                EmojiEntity(26, R.drawable.emoji26),
+                EmojiEntity(27, R.drawable.emoji27),
+                EmojiEntity(28, R.drawable.emoji28),
+                EmojiEntity(29, R.drawable.emoji29),
+                EmojiEntity(30, R.drawable.emoji30),
+                EmojiEntity(31, R.drawable.emoji31)
             )
 
             database.runInTransaction { database.emojiDao().insertAll(emojiList) }

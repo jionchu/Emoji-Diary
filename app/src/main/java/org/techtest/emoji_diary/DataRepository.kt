@@ -3,8 +3,8 @@ package org.techtest.emoji_diary
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import org.techtest.emoji_diary.database.AppDatabase
-import org.techtest.emoji_diary.database.Diary
-import org.techtest.emoji_diary.database.Emoji
+import org.techtest.emoji_diary.database.entity.DiaryEntity
+import org.techtest.emoji_diary.database.entity.EmojiEntity
 
 /**
  * Created by jionchu on 2021-04-29
@@ -12,8 +12,8 @@ import org.techtest.emoji_diary.database.Emoji
 class DataRepository {
 
     private var mDatabase: AppDatabase
-    private var mObservableDiaries: MediatorLiveData<List<Diary>>
-    private var mObservableEmojis: MediatorLiveData<List<Emoji>>
+    private var mObservableDiaries: MediatorLiveData<List<DiaryEntity>>
+    private var mObservableEmojis: MediatorLiveData<List<EmojiEntity>>
 
     constructor(database: AppDatabase) {
         mDatabase = database
@@ -35,35 +35,35 @@ class DataRepository {
         }
     }
 
-    fun getDiaries(): LiveData<List<Diary>> {
+    fun getDiaries(): LiveData<List<DiaryEntity>> {
         return mObservableDiaries
     }
 
-    fun loadDiary(diaryId: Int): Diary {
+    fun loadDiary(diaryId: Int): DiaryEntity {
         return mDatabase.diaryDao().loadById(diaryId)
     }
 
-    fun loadByLike(): LiveData<List<Diary>> {
+    fun loadByLike(): LiveData<List<DiaryEntity>> {
         return mDatabase.diaryDao().loadByLike(true)
     }
 
-    fun loadByEmoji(emojiId: Int): LiveData<List<Diary>> {
+    fun loadByEmoji(emojiId: Int): LiveData<List<DiaryEntity>> {
         return mDatabase.diaryDao().loadByEmoji(emojiId)
     }
 
-    fun insertDiary(diary: Diary) {
+    fun insertDiary(diary: DiaryEntity) {
         mDatabase.diaryDao().insertDiary(diary)
     }
 
-    fun updateDiary(diary: Diary) {
+    fun updateDiary(diary: DiaryEntity) {
         mDatabase.diaryDao().updateDiary(diary)
     }
 
-    fun getEmojis(): LiveData<List<Emoji>> {
+    fun getEmojis(): LiveData<List<EmojiEntity>> {
         return mObservableEmojis
     }
 
-    fun insertEmoji(emoji: Emoji) {
+    fun insertEmoji(emoji: EmojiEntity) {
         mDatabase.emojiDao().insert(emoji)
     }
 

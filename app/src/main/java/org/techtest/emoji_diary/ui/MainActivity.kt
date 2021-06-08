@@ -1,4 +1,4 @@
-package org.techtest.emoji_diary.main
+package org.techtest.emoji_diary.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -9,12 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.main.daily.MainDailyFragment
-import org.techtest.emoji_diary.main.like.MainLikeFragment
-import org.techtest.emoji_diary.main.monthly.MainMonthlyFragment
-import org.techtest.emoji_diary.model.Diary
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+import org.techtest.emoji_diary.ui.fragments.MainDailyFragment
+import org.techtest.emoji_diary.ui.fragments.MainLikeFragment
+import org.techtest.emoji_diary.ui.fragments.MainMonthlyFragment
 
 class MainActivity : AppCompatActivity() {
 

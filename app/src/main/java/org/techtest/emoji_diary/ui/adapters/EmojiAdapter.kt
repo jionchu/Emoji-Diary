@@ -1,4 +1,4 @@
-package org.techtest.emoji_diary.adapter
+package org.techtest.emoji_diary.ui.adapters
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.adapter.EmojiAdapter.EmojiViewHolder
-import org.techtest.emoji_diary.database.Emoji
+import org.techtest.emoji_diary.ui.adapters.EmojiAdapter.EmojiViewHolder
+import org.techtest.emoji_diary.database.entity.EmojiEntity
 
-class EmojiAdapter() : ListAdapter<Emoji, EmojiViewHolder>(EmojiComparator()) {
+class EmojiAdapter() : ListAdapter<EmojiEntity, EmojiViewHolder>(EmojiComparator()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): EmojiViewHolder {
         return EmojiViewHolder.create(viewGroup)
@@ -27,7 +27,7 @@ class EmojiAdapter() : ListAdapter<Emoji, EmojiViewHolder>(EmojiComparator()) {
         private val ivEmoji: ImageView = itemView.findViewById(R.id.emoji_image)
         private val tvCount: TextView = itemView.findViewById(R.id.txt_count)
 
-        fun bind(emoji: Emoji) {
+        fun bind(emoji: EmojiEntity) {
             ivEmoji.setImageResource(emoji.image)
             val countText = "(${emoji.count})"
             tvCount.text = countText
@@ -42,12 +42,12 @@ class EmojiAdapter() : ListAdapter<Emoji, EmojiViewHolder>(EmojiComparator()) {
         }
     }
 
-    class EmojiComparator: DiffUtil.ItemCallback<Emoji>() {
-        override fun areItemsTheSame(oldItem: Emoji, newItem: Emoji): Boolean {
+    class EmojiComparator: DiffUtil.ItemCallback<EmojiEntity>() {
+        override fun areItemsTheSame(oldItem: EmojiEntity, newItem: EmojiEntity): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Emoji, newItem: Emoji): Boolean {
+        override fun areContentsTheSame(oldItem: EmojiEntity, newItem: EmojiEntity): Boolean {
             return oldItem.id == newItem.id
         }
     }
