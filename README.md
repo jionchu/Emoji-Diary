@@ -58,8 +58,6 @@
 ## :hammer: Development Environment
 - Kotlin
 - Android Studio @4.0.1
-
-## :bookmark: Application Version
 - minSdkVersion : 15
 - targetSdkVersion : 28
 
