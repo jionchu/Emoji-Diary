@@ -41,7 +41,7 @@ class DiaryAdapter : ListAdapter<DiaryEntity, DiaryViewHolder>(DiaryComparator()
         companion object {
             fun create(parent: ViewGroup): DiaryViewHolder {
                 val view: View = LayoutInflater.from(parent.context)
-                        .inflate(R.layout.diary_item, parent, false)
+                        .inflate(R.layout.item_diary, parent, false)
                 return DiaryViewHolder(view)
             }
         }

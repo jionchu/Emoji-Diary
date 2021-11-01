@@ -27,21 +27,23 @@ class MainDailyFragment : androidx.fragment.app.Fragment() {
     private lateinit var onTouchListener: RecyclerTouchListener
     private lateinit var diaryViewModel: DiaryViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_daily, container, false)
 
-        val fab: FloatingActionButton = view.findViewById(R.id.fab)
-        val tvDate: TextView = view.findViewById(R.id.txt_main_date)
-        val tvDefault: TextView = view.findViewById(R.id.tv_default)
-        recyclerView = view.findViewById(R.id.diary_recycler_view)
+        val fab: FloatingActionButton = view.findViewById(R.id.daily_fab)
+        val tvDate: TextView = view.findViewById(R.id.daily_tv_date)
+        val tvDefault: TextView = view.findViewById(R.id.daily_tv_default)
+        recyclerView = view.findViewById(R.id.daily_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         mDiaryAdapter = DiaryAdapter()
         recyclerView.adapter = mDiaryAdapter
 
         val factory = DiaryViewModelFactory(
-                MyApplication.sRepository!!
+            MyApplication.sRepository!!
         )
         diaryViewModel = ViewModelProvider(this, factory).get(DiaryViewModel::class.java)
         diaryViewModel.allDiaries.observe(viewLifecycleOwner) { diaries ->
@@ -56,24 +58,25 @@ class MainDailyFragment : androidx.fragment.app.Fragment() {
             tvDefault.visibility = View.GONE
 
         onTouchListener = RecyclerTouchListener(activity, recyclerView)
-                .setClickable(object : RecyclerTouchListener.OnRowClickListener {
-                    override fun onRowClicked(position: Int) {
-                        val intent = Intent(activity, AddActivity::class.java)
-                        intent.putExtra("diaryId", diaryViewModel.allDiaries.value!![position].id)
-                        startActivity(intent)
-                    }
-
-                    override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
-                }).setSwipeOptionViews(R.id.button_heart, R.id.button_delete).setSwipeable(R.id.item_fg, R.id.item_bg) { viewID, position ->
-                    val original: DiaryEntity = diaryViewModel.allDiaries.value!![position]
-                    if (viewID == R.id.button_heart) {
-                        original.like = !original.like
-                        diaryViewModel.update(original)
-                    } else if (viewID == R.id.button_delete) {
-                        MyApplication.sInstance!!.diaryDao().deleteDiary(original)
-                        MyApplication.sInstance!!.emojiDao().decreaseCount(original.emojiId)
-                    }
+            .setClickable(object : RecyclerTouchListener.OnRowClickListener {
+                override fun onRowClicked(position: Int) {
+                    val intent = Intent(activity, AddActivity::class.java)
+                    intent.putExtra("diaryId", diaryViewModel.allDiaries.value!![position].id)
+                    startActivity(intent)
                 }
+
+                override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
+            }).setSwipeOptionViews(R.id.button_heart, R.id.button_delete)
+            .setSwipeable(R.id.item_fg, R.id.item_bg) { viewID, position ->
+                val original: DiaryEntity = diaryViewModel.allDiaries.value!![position]
+                if (viewID == R.id.button_heart) {
+                    original.like = !original.like
+                    diaryViewModel.update(original)
+                } else if (viewID == R.id.button_delete) {
+                    MyApplication.sInstance!!.diaryDao().deleteDiary(original)
+                    MyApplication.sInstance!!.emojiDao().decreaseCount(original.emojiId)
+                }
+            }
 
         fab.attachToRecyclerView(recyclerView)
         fab.setOnClickListener {

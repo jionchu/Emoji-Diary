@@ -36,7 +36,7 @@ class EmojiAdapter() : ListAdapter<EmojiEntity, EmojiViewHolder>(EmojiComparator
         companion object {
             fun create(parent: ViewGroup): EmojiViewHolder {
                 val view: View = LayoutInflater.from(parent.context)
-                        .inflate(R.layout.emoji_item, parent, false)
+                        .inflate(R.layout.item_emoji, parent, false)
                 return EmojiViewHolder(view)
             }
         }

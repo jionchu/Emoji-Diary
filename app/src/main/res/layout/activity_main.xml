@@ -1,102 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.MainActivity">
 
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@+id/main_fl_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        app:layout_constraintBottom_toTopOf="@id/main_cl_bottom"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1" />
 
-    </FrameLayout>
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_cl_bottom"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:background="#443E6C">
+        android:background="#443E6C"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <LinearLayout
-            android:id="@+id/button_tab1"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_cl_daily"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:onClick="customOnClick">
+            android:onClick="customOnClick"
+            app:layout_constraintEnd_toStartOf="@id/main_cl_favorite"
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                android:id="@+id/img_tab1"
+                android:id="@+id/main_iv_daily"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_list" />
+                android:contentDescription="@string/main_daily_icon"
+                android:src="@drawable/ic_list"
+                app:layout_constraintBottom_toTopOf="@id/main_tv_daily"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/txt_tab1"
+                android:id="@+id/main_tv_daily"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DAILY"
+                android:text="@string/main_daily"
+                android:textColor="#ffffff"
                 android:textSize="10dp"
-                android:textColor="#ffffff"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_iv_daily"
+                tools:ignore="SpUsage" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/button_tab2"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_cl_favorite"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:onClick="customOnClick">
+            android:onClick="customOnClick"
+            app:layout_constraintEnd_toStartOf="@id/main_cl_monthly"
+            app:layout_constraintStart_toEndOf="@id/main_cl_daily">
 
             <ImageView
-                android:id="@+id/img_tab2"
+                android:id="@+id/main_iv_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_favorite_border_unclicked"/>
+                android:contentDescription="@string/main_favorite_icon"
+                android:src="@drawable/ic_favorite_border_unclicked"
+                app:layout_constraintBottom_toTopOf="@id/main_tv_favorite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/txt_tab2"
+                android:id="@+id/main_tv_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FAVORITE"
+                android:text="@string/main_favorite"
+                android:textColor="#898989"
                 android:textSize="10dp"
-                android:textColor="#898989"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_iv_favorite"
+                tools:ignore="SpUsage" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/button_tab3"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_cl_monthly"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:onClick="customOnClick">
+            android:onClick="customOnClick"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/main_cl_favorite">
 
             <ImageView
-                android:id="@+id/img_tab3"
+                android:id="@+id/main_iv_monthly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_trending_up_unclicked" />
+                android:contentDescription="@string/main_monthly_icon"
+                android:src="@drawable/ic_trending_up_unclicked"
+                app:layout_constraintBottom_toTopOf="@id/main_tv_monthly"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/txt_tab3"
+                android:id="@+id/main_tv_monthly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MONTHLY"
+                android:text="@string/main_monthly"
+                android:textColor="#898989"
                 android:textSize="10dp"
-                android:textColor="#898989"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_iv_monthly"
+                tools:ignore="SpUsage" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,7 +72,7 @@ class AddActivity : AppCompatActivity() {
         tvDate.setOnClickListener {
             //날짜 선택 다이얼로그 생성
             val datePickerBuilder = AlertDialog.Builder(this@AddActivity)
-            val datePickerView = LayoutInflater.from(applicationContext).inflate(R.layout.date_picker_dialog, null, false)
+            val datePickerView = LayoutInflater.from(applicationContext).inflate(R.layout.dialog_date_picker, null, false)
             datePickerBuilder.setView(datePickerView)
             val datePickerDialog = datePickerBuilder.create()
             datePicker = datePickerView.findViewById<View>(R.id.date_picker) as DatePicker
@@ -101,7 +101,7 @@ class AddActivity : AppCompatActivity() {
         layoutEmoji.setOnClickListener {
             //이모지 선택 다이얼로그 생성
             val builder = AlertDialog.Builder(this@AddActivity)
-            val view = LayoutInflater.from(applicationContext).inflate(R.layout.emoji_dialog, null, false)
+            val view = LayoutInflater.from(applicationContext).inflate(R.layout.dialog_emoji, null, false)
             builder.setView(view)
             val dialog = builder.create()
             val recyclerView: RecyclerView = view.findViewById(R.id.emoji_dialog_recycler_view)

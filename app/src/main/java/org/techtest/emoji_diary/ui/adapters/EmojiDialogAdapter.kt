@@ -34,7 +34,7 @@ class EmojiDialogAdapter(): ListAdapter<EmojiEntity, EmojiDialogAdapter.EmojiDia
         companion object {
             fun create(parent: ViewGroup): EmojiDialogViewHolder {
                 val view: View = LayoutInflater.from(parent.context)
-                        .inflate(R.layout.emoji_dialog_item, parent, false)
+                        .inflate(R.layout.item_dialog_emoji, parent, false)
                 return EmojiDialogViewHolder(view)
             }
         }

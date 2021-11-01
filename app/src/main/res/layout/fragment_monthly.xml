@@ -9,31 +9,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
         android:background="@color/colorPrimaryDark"
-        android:padding="40dp"
-        android:layout_marginBottom="10dp">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="40dp">
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_trending_up"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_trending_up" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/monthly_title_top"
-            android:textSize="17dp"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/monthly_title_bottom"
             android:textColor="#ffffff"
-            android:textSize="17dp"/>
+            android:textSize="17dp" />
 
     </LinearLayout>
 
@@ -41,6 +40,8 @@
         android:id="@+id/emoji_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/emoji_item"/>
+        android:clipToPadding="false"
+        android:paddingTop="10dp"
+        tools:listitem="@layout/item_emoji" />
 
 </LinearLayout>

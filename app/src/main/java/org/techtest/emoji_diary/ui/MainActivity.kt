@@ -27,15 +27,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainDailyFragment())
-                .commit()
+            .replace(R.id.main_fl_container, MainDailyFragment())
+            .commit()
 
-        mIvDaily = findViewById(R.id.img_tab1)
-        mIvLike = findViewById(R.id.img_tab2)
-        mIvMonthly = findViewById(R.id.img_tab3)
-        mTvDaily = findViewById(R.id.txt_tab1)
-        mTvLike = findViewById(R.id.txt_tab2)
-        mTvMonthly = findViewById(R.id.txt_tab3)
+        mIvDaily = findViewById(R.id.main_iv_daily)
+        mIvLike = findViewById(R.id.main_iv_favorite)
+        mIvMonthly = findViewById(R.id.main_iv_monthly)
+        mTvDaily = findViewById(R.id.main_tv_daily)
+        mTvLike = findViewById(R.id.main_tv_favorite)
+        mTvMonthly = findViewById(R.id.main_tv_monthly)
 
         val database = MyApplication.sInstance!!
         Log.d("MainActivity", database.emojiDao().getRowCount().toString())
@@ -49,10 +49,10 @@ class MainActivity : AppCompatActivity() {
 
     fun customOnClick(view: View) {
         when (view.id) {
-            R.id.button_tab1 -> {
+            R.id.main_cl_daily -> {
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, MainDailyFragment())
-                        .commit()
+                    .replace(R.id.main_fl_container, MainDailyFragment())
+                    .commit()
                 mIvDaily.setImageResource(R.drawable.ic_list)
                 mTvDaily.setTextColor(Color.rgb(255, 255, 255))
                 mIvLike.setImageResource(R.drawable.ic_favorite_border_unclicked)
@@ -60,10 +60,10 @@ class MainActivity : AppCompatActivity() {
                 mIvMonthly.setImageResource(R.drawable.ic_trending_up_unclicked)
                 mTvMonthly.setTextColor(Color.rgb(137, 137, 137))
             }
-            R.id.button_tab2 -> {
+            R.id.main_cl_favorite -> {
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, MainLikeFragment())
-                        .commit()
+                    .replace(R.id.main_fl_container, MainLikeFragment())
+                    .commit()
                 mIvDaily.setImageResource(R.drawable.ic_list_unclicked)
                 mTvDaily.setTextColor(Color.rgb(137, 137, 137))
                 mIvLike.setImageResource(R.drawable.ic_favorite_border)
@@ -71,10 +71,10 @@ class MainActivity : AppCompatActivity() {
                 mIvMonthly.setImageResource(R.drawable.ic_trending_up_unclicked)
                 mTvMonthly.setTextColor(Color.rgb(137, 137, 137))
             }
-            R.id.button_tab3 -> {
+            R.id.main_cl_monthly -> {
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, MainMonthlyFragment())
-                        .commit()
+                    .replace(R.id.main_fl_container, MainMonthlyFragment())
+                    .commit()
                 mIvDaily.setImageResource(R.drawable.ic_list_unclicked)
                 mTvDaily.setTextColor(Color.rgb(137, 137, 137))
                 mIvLike.setImageResource(R.drawable.ic_favorite_border_unclicked)

@@ -51,7 +51,7 @@ class MainMonthlyFragment : androidx.fragment.app.Fragment() {
                                 mEmojiViewModel.allEmojis.value!![position].image
                         )
                         transaction = activity!!.supportFragmentManager.beginTransaction()
-                        transaction.replace(R.id.container, mainEmojiFragment).addToBackStack("tab3")
+                        transaction.replace(R.id.main_fl_container, mainEmojiFragment).addToBackStack("tab3")
                         transaction.commit()
                     }
 

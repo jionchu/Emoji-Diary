@@ -1,7 +1,13 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Emoji Diary</string>
     <string name="main_daily_empty">Express today\'s mood with an emoji.</string>
     <string name="monthly_title_top">How did I feel in the meantime?</string>
     <string name="monthly_title_bottom">View at a glance</string>
 
+    <string name="main_daily" translatable="false">DAILY</string>
+    <string name="main_daily_icon" translatable="false">daily icon</string>
+    <string name="main_favorite" translatable="false">FAVORITE</string>
+    <string name="main_favorite_icon" translatable="false">favorite icon</string>
+    <string name="main_monthly" translatable="false">MONTHLY</string>
+    <string name="main_monthly_icon" translatable="false">monthly icon</string>
 </resources>
