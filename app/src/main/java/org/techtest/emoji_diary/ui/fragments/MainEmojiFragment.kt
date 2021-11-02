@@ -31,8 +31,8 @@ class MainEmojiFragment : androidx.fragment.app.Fragment() {
 
         val tvCount: TextView = view.findViewById(R.id.txt_count)
         val ivEmoji: ImageView = view.findViewById(R.id.emoji_image)
-        ivEmoji.setImageResource(arguments!!.getInt("emojiRes"))
-        val emojiId = arguments!!.getInt("emojiId")
+        ivEmoji.setImageResource(requireArguments().getInt("emojiRes"))
+        val emojiId = requireArguments().getInt("emojiId")
 
         val diaryAdapter = DiaryAdapter()
         mRecyclerView = view.findViewById(R.id.diary_recycler_view)
@@ -43,13 +43,13 @@ class MainEmojiFragment : androidx.fragment.app.Fragment() {
                 MyApplication.sRepository!!
         )
         val diaryViewModel: DiaryViewModel = ViewModelProvider(this, factory).get(DiaryViewModel::class.java)
-        diaryViewModel.loadByEmoji(emojiId).observe(viewLifecycleOwner) { diaries ->
-            run {
-                diaries.let { diaryAdapter.submitList(it) }
-                val strCount = "(${diaries.size})"
-                tvCount.text = strCount
-            }
-        }
+//        diaryViewModel.loadByEmoji(emojiId).observe(viewLifecycleOwner) { diaries ->
+//            run {
+//                diaries.let { diaryAdapter.submitList(it) }
+//                val strCount = "(${diaries.size})"
+//                tvCount.text = strCount
+//            }
+//        }
 
         mOnTouchListener = RecyclerTouchListener(activity, mRecyclerView)
                 .setClickable(object : OnRowClickListener {

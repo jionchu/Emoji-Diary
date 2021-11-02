@@ -1,88 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/item_fg"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="diary"
+            type="org.techtest.emoji_diary.database.entity.DiaryEntity" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="20dp"
-        android:background="#ffffff"
-        android:clickable="true"
-        android:elevation="4dp"
-        android:focusable="true"
-        android:visibility="visible">
-
-        <ImageView
-            android:id="@+id/diary_image"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            tools:src="@drawable/emoji1"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/item_fg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical">
+            android:padding="20dp"
+            android:visibility="visible">
 
-            <TextView
-                android:id="@+id/diary_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:text="학원 숙제 시작"
-                android:textSize="17dp"
-                android:layout_marginRight="10dp"/>
+            <ImageView
+                android:id="@+id/diary_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:setImage="@{diary.emojiRes}"
+                tools:src="@drawable/emoji1" />
 
-            <TextView
-                android:id="@+id/diary_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="10월 8일"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/diary_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:text="@{diary.title}"
+                    android:textSize="17dp"
+                    tools:ignore="SpUsage"
+                    tools:text="학원 숙제 시작" />
+
+                <TextView
+                    android:id="@+id/diary_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{diary.date}"
+                    tools:text="10월 8일" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/item_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
 
-    <LinearLayout
-        android:id="@+id/item_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        android:paddingHorizontal="10dp"
-        android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/button_heart"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:scaleType="centerCrop"
+                android:src="@{diary.like ? @drawable/ic_favorite : @drawable/ic_favorite_border_unclicked}"
+                tools:src="@drawable/ic_favorite_border_color" />
 
-        <ImageView
-            android:id="@+id/button_heart"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:padding="20dp"
-            android:src="@drawable/ic_favorite_border_color"/>
+            <ImageView
+                android:id="@+id/button_delete"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_delete" />
 
-        <ImageView
-            android:id="@+id/button_delete"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:padding="16dp"
-            android:src="@drawable/ic_delete"/>
+        </LinearLayout>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#67676767"
+            android:elevation="5dp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="#67676767"
-        android:elevation="5dp"/>
+    </RelativeLayout>
 
-</RelativeLayout>
+</layout>

@@ -42,7 +42,7 @@ class AppExecutors {
             private var mainThreadHandler: Handler = Handler(Looper.getMainLooper())
 
             override fun execute(command: Runnable?) {
-                mainThreadHandler.post(command)
+                mainThreadHandler.post(command!!)
             }
         }
     }

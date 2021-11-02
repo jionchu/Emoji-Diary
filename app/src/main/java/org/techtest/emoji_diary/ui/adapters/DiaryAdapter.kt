@@ -2,15 +2,12 @@ package org.techtest.emoji_diary.ui.adapters
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.ui.adapters.DiaryAdapter.DiaryViewHolder
 import org.techtest.emoji_diary.database.entity.DiaryEntity
+import org.techtest.emoji_diary.databinding.ItemDiaryBinding
 
 class DiaryAdapter : ListAdapter<DiaryEntity, DiaryViewHolder>(DiaryComparator()) {
 
@@ -19,35 +16,30 @@ class DiaryAdapter : ListAdapter<DiaryEntity, DiaryViewHolder>(DiaryComparator()
     }
 
     override fun onBindViewHolder(diaryViewHolder: DiaryViewHolder, position: Int) {
-        val current = getItem(position)
-        diaryViewHolder.bind(current)
+        diaryViewHolder.bind(getItem(position))
     }
 
-    class DiaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var ivImage: ImageView = itemView.findViewById(R.id.diary_image)
-        private var ivLike: ImageView = itemView.findViewById(R.id.button_heart)
-        private var tvTitle: TextView = itemView.findViewById(R.id.diary_title)
-        private var tvDate: TextView = itemView.findViewById(R.id.diary_date)
+    class DiaryViewHolder(private val binding: ItemDiaryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(diary: DiaryEntity) {
-            ivImage.setImageResource(diary.emojiRes)
-            tvTitle.text = diary.title
-            tvDate.text = diary.date
-
-            if (diary.like) ivLike.setImageResource(R.drawable.ic_favorite)
-            else ivLike.setImageResource(R.drawable.ic_favorite_border_unclicked)
+            binding.diary = diary
         }
 
         companion object {
             fun create(parent: ViewGroup): DiaryViewHolder {
-                val view: View = LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_diary, parent, false)
-                return DiaryViewHolder(view)
+                return DiaryViewHolder(
+                    ItemDiaryBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
             }
         }
     }
 
-    class DiaryComparator: DiffUtil.ItemCallback<DiaryEntity>() {
+    class DiaryComparator : DiffUtil.ItemCallback<DiaryEntity>() {
         override fun areItemsTheSame(oldItem: DiaryEntity, newItem: DiaryEntity): Boolean {
             return oldItem === newItem
         }

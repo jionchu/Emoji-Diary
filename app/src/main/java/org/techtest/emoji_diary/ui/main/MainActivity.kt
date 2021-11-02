@@ -1,15 +1,12 @@
-package org.techtest.emoji_diary.ui
+package org.techtest.emoji_diary.ui.main
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.ui.fragments.MainDailyFragment
 import org.techtest.emoji_diary.ui.fragments.MainLikeFragment
 import org.techtest.emoji_diary.ui.fragments.MainMonthlyFragment
 
@@ -36,15 +33,6 @@ class MainActivity : AppCompatActivity() {
         mTvDaily = findViewById(R.id.main_tv_daily)
         mTvLike = findViewById(R.id.main_tv_favorite)
         mTvMonthly = findViewById(R.id.main_tv_monthly)
-
-        val database = MyApplication.sInstance!!
-        Log.d("MainActivity", database.emojiDao().getRowCount().toString())
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("MainActivity", MyApplication.sInstance!!.emojiDao().getRowCount().toString())
-        Log.d("MainActivity", MyApplication.sInstance!!.diaryDao().getRowCount().toString())
     }
 
     fun customOnClick(view: View) {
