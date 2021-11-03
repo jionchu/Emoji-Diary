@@ -27,7 +27,7 @@ class DailyViewModel(private val repository: DataRepository) : ViewModel() {
 @Suppress("UNCHECKED_CAST")
 class DailyViewModelFactory(private val repository: DataRepository) :
     ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DailyViewModel::class.java))
             return DailyViewModel(repository) as T
         else throw IllegalArgumentException("Unknown ViewModel class")

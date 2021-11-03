@@ -19,7 +19,7 @@ class EmojiViewModel(private val repository: DataRepository) : ViewModel() {
 }
 
 class EmojiViewModelFactory(private val repository: DataRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EmojiViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return EmojiViewModel(repository) as T

@@ -19,7 +19,7 @@ class AddViewModel(private val repository: DataRepository) : ViewModel() {
 }
 
 class AddViewModelFactory(private val repository: DataRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AddViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return AddViewModel(repository) as T

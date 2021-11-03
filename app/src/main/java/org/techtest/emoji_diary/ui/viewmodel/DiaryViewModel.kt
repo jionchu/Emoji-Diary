@@ -31,7 +31,7 @@ class DiaryViewModel(private val repository: DataRepository) : ViewModel() {
 }
 
 class DiaryViewModelFactory(private val repository: DataRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DiaryViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return DiaryViewModel(repository) as T
