@@ -1,9 +1,9 @@
-package org.techtest.emoji_diary.database.dao
+package org.techtest.emoji_diary.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import org.techtest.emoji_diary.database.entity.EmojiEntity
+import org.techtest.emoji_diary.data.local.entity.EmojiEntity
 
 /**
  * Created by jionchu on 2021-04-26

@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.ui.fragments.MainLikeFragment
-import org.techtest.emoji_diary.ui.fragments.MainMonthlyFragment
+import org.techtest.emoji_diary.ui.like.LikeFragment
+import org.techtest.emoji_diary.ui.monthly.MonthlyFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.main_fl_container, MainDailyFragment())
+            .replace(R.id.main_fl_container, DailyFragment())
             .commit()
 
         mIvDaily = findViewById(R.id.main_iv_daily)
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         when (view.id) {
             R.id.main_cl_daily -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_fl_container, MainDailyFragment())
+                    .replace(R.id.main_fl_container, DailyFragment())
                     .commit()
                 mIvDaily.setImageResource(R.drawable.ic_list)
                 mTvDaily.setTextColor(Color.rgb(255, 255, 255))
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.main_cl_favorite -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_fl_container, MainLikeFragment())
+                    .replace(R.id.main_fl_container, LikeFragment())
                     .commit()
                 mIvDaily.setImageResource(R.drawable.ic_list_unclicked)
                 mTvDaily.setTextColor(Color.rgb(137, 137, 137))
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.main_cl_monthly -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_fl_container, MainMonthlyFragment())
+                    .replace(R.id.main_fl_container, MonthlyFragment())
                     .commit()
                 mIvDaily.setImageResource(R.drawable.ic_list_unclicked)
                 mTvDaily.setTextColor(Color.rgb(137, 137, 137))

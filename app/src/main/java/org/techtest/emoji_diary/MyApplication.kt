@@ -2,7 +2,8 @@ package org.techtest.emoji_diary
 
 import android.annotation.SuppressLint
 import android.app.Application
-import org.techtest.emoji_diary.database.AppDatabase
+import org.techtest.emoji_diary.data.DataRepository
+import org.techtest.emoji_diary.data.local.AppDatabase
 import java.text.SimpleDateFormat
 
 /**

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="org.techtest.emoji_diary.ui.main.MainViewModel" />
+            type="org.techtest.emoji_diary.ui.main.DailyViewModel" />
 
     </data>
 

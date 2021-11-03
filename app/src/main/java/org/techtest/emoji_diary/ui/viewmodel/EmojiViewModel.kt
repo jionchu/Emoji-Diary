@@ -1,9 +1,9 @@
-package org.techtest.emoji_diary.viewmodel
+package org.techtest.emoji_diary.ui.viewmodel
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.techtest.emoji_diary.DataRepository
-import org.techtest.emoji_diary.database.entity.EmojiEntity
+import org.techtest.emoji_diary.data.DataRepository
+import org.techtest.emoji_diary.data.local.entity.EmojiEntity
 import java.lang.IllegalArgumentException
 
 /**

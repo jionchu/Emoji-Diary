@@ -1,4 +1,4 @@
-package org.techtest.emoji_diary.database.entity
+package org.techtest.emoji_diary.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

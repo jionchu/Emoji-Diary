@@ -11,17 +11,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener
 import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.database.entity.DiaryEntity
+import org.techtest.emoji_diary.data.local.entity.DiaryEntity
 import org.techtest.emoji_diary.databinding.FragmentDailyBinding
 import org.techtest.emoji_diary.ui.adapters.DiaryAdapter
-import org.techtest.emoji_diary.ui.AddActivity
+import org.techtest.emoji_diary.ui.add.AddActivity
 import java.util.*
 
-class MainDailyFragment : androidx.fragment.app.Fragment() {
+class DailyFragment : androidx.fragment.app.Fragment() {
 
     private lateinit var mDiaryAdapter: DiaryAdapter
     private lateinit var onTouchListener: RecyclerTouchListener
-    private lateinit var diaryViewModel: MainViewModel
+    private lateinit var diaryViewModel: DailyViewModel
     private lateinit var binding: FragmentDailyBinding
 
     override fun onCreateView(
@@ -35,10 +35,10 @@ class MainDailyFragment : androidx.fragment.app.Fragment() {
         binding.dailyRecyclerview.adapter = mDiaryAdapter
 
         diaryViewModel = ViewModelProvider(
-            this, MainViewModelFactory(
+            this, DailyViewModelFactory(
                 MyApplication.sRepository!!
             )
-        ).get(MainViewModel::class.java)
+        ).get(DailyViewModel::class.java)
 
         // 현재 날짜 설정
         binding.dailyTvDate.text = MyApplication.dateStrFormat.format(Date())

@@ -1,4 +1,4 @@
-package org.techtest.emoji_diary.ui.fragments
+package org.techtest.emoji_diary.ui.monthly
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentTransaction
@@ -13,10 +13,10 @@ import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener.OnRowClickList
 import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.ui.adapters.EmojiAdapter
-import org.techtest.emoji_diary.viewmodel.EmojiViewModel
-import org.techtest.emoji_diary.viewmodel.EmojiViewModelFactory
+import org.techtest.emoji_diary.ui.viewmodel.EmojiViewModel
+import org.techtest.emoji_diary.ui.viewmodel.EmojiViewModelFactory
 
-class MainMonthlyFragment : androidx.fragment.app.Fragment() {
+class MonthlyFragment : androidx.fragment.app.Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var mAdapter: EmojiAdapter
@@ -24,7 +24,11 @@ class MainMonthlyFragment : androidx.fragment.app.Fragment() {
     private lateinit var transaction: FragmentTransaction
     private lateinit var mEmojiViewModel: EmojiViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_monthly, container, false)
 
@@ -34,7 +38,7 @@ class MainMonthlyFragment : androidx.fragment.app.Fragment() {
         recyclerView.adapter = mAdapter
 
         val factory = EmojiViewModelFactory(
-                MyApplication.sRepository!!
+            MyApplication.sRepository!!
         )
         mEmojiViewModel = ViewModelProvider(this, factory).get(EmojiViewModel::class.java)
         mEmojiViewModel.allEmojis.observe(viewLifecycleOwner) { emojis ->
@@ -44,19 +48,20 @@ class MainMonthlyFragment : androidx.fragment.app.Fragment() {
         }
 
         onTouchListener = RecyclerTouchListener(activity, recyclerView)
-                .setClickable(object : OnRowClickListener {
-                    override fun onRowClicked(position: Int) {
-                        val mainEmojiFragment: MainEmojiFragment = MainEmojiFragment.newInstance(
-                                mEmojiViewModel.allEmojis.value!![position].id,
-                                mEmojiViewModel.allEmojis.value!![position].image
-                        )
-                        transaction = activity!!.supportFragmentManager.beginTransaction()
-                        transaction.replace(R.id.main_fl_container, mainEmojiFragment).addToBackStack("tab3")
-                        transaction.commit()
-                    }
+            .setClickable(object : OnRowClickListener {
+                override fun onRowClicked(position: Int) {
+                    val emojiFragment: EmojiFragment = EmojiFragment.newInstance(
+                        mEmojiViewModel.allEmojis.value!![position].id,
+                        mEmojiViewModel.allEmojis.value!![position].image
+                    )
+                    transaction = activity!!.supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_fl_container, emojiFragment)
+                        .addToBackStack("tab3")
+                    transaction.commit()
+                }
 
-                    override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
-                })
+                override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
+            })
         return view
     }
 

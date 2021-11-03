@@ -1,7 +1,7 @@
-package org.techtest.emoji_diary.database.dao
+package org.techtest.emoji_diary.data.local.dao
 
 import androidx.room.*
-import org.techtest.emoji_diary.database.entity.DiaryEntity
+import org.techtest.emoji_diary.data.local.entity.DiaryEntity
 
 /**
  * Created by jionchu on 2021-04-26

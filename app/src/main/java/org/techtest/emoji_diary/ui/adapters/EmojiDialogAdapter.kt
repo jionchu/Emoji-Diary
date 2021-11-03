@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.database.entity.EmojiEntity
+import org.techtest.emoji_diary.data.local.entity.EmojiEntity
 
 /**
  * Created by jionchu on 2021-05-01

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import org.techtest.emoji_diary.ui.adapters.DiaryAdapter.DiaryViewHolder
-import org.techtest.emoji_diary.database.entity.DiaryEntity
+import org.techtest.emoji_diary.data.local.entity.DiaryEntity
 import org.techtest.emoji_diary.databinding.ItemDiaryBinding
 
 class DiaryAdapter : ListAdapter<DiaryEntity, DiaryViewHolder>(DiaryComparator()) {

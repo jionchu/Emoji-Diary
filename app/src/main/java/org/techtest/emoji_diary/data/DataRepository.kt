@@ -1,8 +1,8 @@
-package org.techtest.emoji_diary
+package org.techtest.emoji_diary.data
 
-import org.techtest.emoji_diary.database.AppDatabase
-import org.techtest.emoji_diary.database.entity.DiaryEntity
-import org.techtest.emoji_diary.database.entity.EmojiEntity
+import org.techtest.emoji_diary.data.local.AppDatabase
+import org.techtest.emoji_diary.data.local.entity.DiaryEntity
+import org.techtest.emoji_diary.data.local.entity.EmojiEntity
 
 /**
  * Created by jionchu on 2021-04-29

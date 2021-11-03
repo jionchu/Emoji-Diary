@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.techtest.emoji_diary.DataRepository
-import org.techtest.emoji_diary.database.entity.DiaryEntity
+import org.techtest.emoji_diary.data.DataRepository
+import org.techtest.emoji_diary.data.local.entity.DiaryEntity
 import java.lang.IllegalArgumentException
 
-class MainViewModel(private val repository: DataRepository) : ViewModel() {
+class DailyViewModel(private val repository: DataRepository) : ViewModel() {
     private val _isEmpty: MutableLiveData<Boolean> = MutableLiveData()
     val isEmpty: LiveData<Boolean> get() = _isEmpty
     private val _diaries: MutableLiveData<List<DiaryEntity>> = MutableLiveData()
@@ -25,11 +25,11 @@ class MainViewModel(private val repository: DataRepository) : ViewModel() {
 }
 
 @Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(private val repository: DataRepository) :
+class DailyViewModelFactory(private val repository: DataRepository) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java))
-            return MainViewModel(repository) as T
+        if (modelClass.isAssignableFrom(DailyViewModel::class.java))
+            return DailyViewModel(repository) as T
         else throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

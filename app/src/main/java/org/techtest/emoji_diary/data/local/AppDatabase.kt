@@ -1,4 +1,4 @@
-package org.techtest.emoji_diary.database
+package org.techtest.emoji_diary.data.local
 
 import android.content.Context
 import android.util.Log
@@ -9,10 +9,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import org.techtest.emoji_diary.AppExecutors
 import org.techtest.emoji_diary.MyApplication.Companion.sInstance
 import org.techtest.emoji_diary.R
-import org.techtest.emoji_diary.database.dao.DiaryDao
-import org.techtest.emoji_diary.database.dao.EmojiDao
-import org.techtest.emoji_diary.database.entity.DiaryEntity
-import org.techtest.emoji_diary.database.entity.EmojiEntity
+import org.techtest.emoji_diary.data.local.dao.DiaryDao
+import org.techtest.emoji_diary.data.local.dao.EmojiDao
+import org.techtest.emoji_diary.data.local.entity.DiaryEntity
+import org.techtest.emoji_diary.data.local.entity.EmojiEntity
 import java.util.concurrent.Executors
 
 /**

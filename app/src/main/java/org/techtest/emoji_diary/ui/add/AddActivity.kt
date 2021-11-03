@@ -1,4 +1,4 @@
-package org.techtest.emoji_diary.ui
+package org.techtest.emoji_diary.ui.add
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -14,10 +14,8 @@ import org.techtest.emoji_diary.MyApplication
 import org.techtest.emoji_diary.MyApplication.Companion.dateFormat
 import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.ui.adapters.EmojiDialogAdapter
-import org.techtest.emoji_diary.database.entity.DiaryEntity
-import org.techtest.emoji_diary.database.entity.EmojiEntity
-import org.techtest.emoji_diary.viewmodel.EmojiViewModel
-import org.techtest.emoji_diary.viewmodel.EmojiViewModelFactory
+import org.techtest.emoji_diary.data.local.entity.DiaryEntity
+import org.techtest.emoji_diary.data.local.entity.EmojiEntity
 import java.util.*
 import java.util.concurrent.Executors
 
@@ -35,7 +33,7 @@ class AddActivity : AppCompatActivity() {
     private var image = R.drawable.emoji1
     private var date: Date? = null
     private var datePicker: DatePicker? = null
-    private lateinit var mEmojiViewModel: EmojiViewModel
+    private lateinit var mEmojiViewModel: AddViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +70,8 @@ class AddActivity : AppCompatActivity() {
         tvDate.setOnClickListener {
             //날짜 선택 다이얼로그 생성
             val datePickerBuilder = AlertDialog.Builder(this@AddActivity)
-            val datePickerView = LayoutInflater.from(applicationContext).inflate(R.layout.dialog_date_picker, null, false)
+            val datePickerView = LayoutInflater.from(applicationContext)
+                .inflate(R.layout.dialog_date_picker, null, false)
             datePickerBuilder.setView(datePickerView)
             val datePickerDialog = datePickerBuilder.create()
             datePicker = datePickerView.findViewById<View>(R.id.date_picker) as DatePicker
@@ -83,7 +82,7 @@ class AddActivity : AppCompatActivity() {
                 val year = datePicker!!.year
                 val month = datePicker!!.month
                 val day = datePicker!!.dayOfMonth
-                date!!.year = year-1900
+                date!!.year = year - 1900
                 date!!.month = month
                 date!!.date = day
                 tvDate.text = MyApplication.dateStrFormat.format(date)
@@ -91,7 +90,8 @@ class AddActivity : AppCompatActivity() {
             }
 
             //닫기 버튼 클릭 시 다이얼로그 닫기
-            datePickerView.findViewById<View>(R.id.button_close).setOnClickListener { datePickerDialog.dismiss() }
+            datePickerView.findViewById<View>(R.id.button_close)
+                .setOnClickListener { datePickerDialog.dismiss() }
 
             //다이얼로그 띄우기
             datePickerDialog.show()
@@ -101,7 +101,8 @@ class AddActivity : AppCompatActivity() {
         layoutEmoji.setOnClickListener {
             //이모지 선택 다이얼로그 생성
             val builder = AlertDialog.Builder(this@AddActivity)
-            val view = LayoutInflater.from(applicationContext).inflate(R.layout.dialog_emoji, null, false)
+            val view =
+                LayoutInflater.from(applicationContext).inflate(R.layout.dialog_emoji, null, false)
             builder.setView(view)
             val dialog = builder.create()
             val recyclerView: RecyclerView = view.findViewById(R.id.emoji_dialog_recycler_view)
@@ -109,10 +110,10 @@ class AddActivity : AppCompatActivity() {
             val dialogAdapter = EmojiDialogAdapter()
             recyclerView.adapter = dialogAdapter
 
-            val factory = EmojiViewModelFactory(
-                    MyApplication.sRepository!!
+            val factory = AddViewModelFactory(
+                MyApplication.sRepository!!
             )
-            mEmojiViewModel = ViewModelProvider(this, factory).get(EmojiViewModel::class.java)
+            mEmojiViewModel = ViewModelProvider(this, factory).get(AddViewModel::class.java)
             mEmojiViewModel.allEmojis.observe(this) { emojis ->
                 run {
                     emojis.let { dialogAdapter.submitList(it) }
@@ -120,7 +121,8 @@ class AddActivity : AppCompatActivity() {
             }
 
             //이모지 선택 이벤트 리스너 설정
-            recyclerView.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView)
+            recyclerView.addOnItemTouchListener(
+                RecyclerTouchListener(this, recyclerView)
                     .setClickable(object : RecyclerTouchListener.OnRowClickListener {
                         //다이얼로그의 이모지 선택 시
                         override fun onRowClicked(position: Int) {
@@ -132,8 +134,14 @@ class AddActivity : AppCompatActivity() {
                             //다이얼로그 닫기
                             dialog.dismiss()
                         }
-                        override fun onIndependentViewClicked(independentViewID: Int, position: Int) {}
-                    }))
+
+                        override fun onIndependentViewClicked(
+                            independentViewID: Int,
+                            position: Int
+                        ) {
+                        }
+                    })
+            )
 
             //다이얼로그 띄우기
             dialog.show()
@@ -152,7 +160,16 @@ class AddActivity : AppCompatActivity() {
                 else -> {
                     //일기 추가
                     if (diaryId == -1) {
-                        MyApplication.sInstance!!.diaryDao().insertDiary(DiaryEntity(dateFormat.format(date).toString(), emojiId, image, title, content, false))
+                        MyApplication.sInstance!!.diaryDao().insertDiary(
+                            DiaryEntity(
+                                dateFormat.format(date).toString(),
+                                emojiId,
+                                image,
+                                title,
+                                content,
+                                false
+                            )
+                        )
                         MyApplication.sInstance!!.emojiDao().increaseCount(emojiId)
                     }
                     //일기 수정

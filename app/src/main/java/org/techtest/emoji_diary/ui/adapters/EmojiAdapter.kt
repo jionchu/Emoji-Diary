@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.ui.adapters.EmojiAdapter.EmojiViewHolder
-import org.techtest.emoji_diary.database.entity.EmojiEntity
+import org.techtest.emoji_diary.data.local.entity.EmojiEntity
 
 class EmojiAdapter() : ListAdapter<EmojiEntity, EmojiViewHolder>(EmojiComparator()) {
 

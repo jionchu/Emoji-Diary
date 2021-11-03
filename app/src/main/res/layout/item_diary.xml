@@ -7,7 +7,7 @@
 
         <variable
             name="diary"
-            type="org.techtest.emoji_diary.database.entity.DiaryEntity" />
+            type="org.techtest.emoji_diary.data.local.entity.DiaryEntity" />
     </data>
 
     <RelativeLayout
@@ -39,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -47,6 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:text="@{diary.title}"
                     android:textSize="17dp"
@@ -69,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:gravity="right"
             android:orientation="horizontal"
             android:paddingHorizontal="10dp">
