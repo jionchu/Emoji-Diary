@@ -6,7 +6,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import org.techtest.emoji_diary.AppExecutors
 import org.techtest.emoji_diary.MyApplication.Companion.sInstance
 import org.techtest.emoji_diary.R
 import org.techtest.emoji_diary.data.local.dao.DiaryDao
@@ -26,12 +25,12 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         private const val DATABASE_NAME = "emoji-diary-db"
 
-        fun getInstance(context: Context, executors: AppExecutors): AppDatabase =
+        fun getInstance(context: Context): AppDatabase =
             sInstance ?: synchronized(this) {
-                sInstance ?: buildDatabase(context.applicationContext, executors).also { sInstance = it }
+                sInstance ?: buildDatabase(context.applicationContext).also { sInstance = it }
             }
 
-        private fun buildDatabase(appContext: Context, executors: AppExecutors): AppDatabase {
+        private fun buildDatabase(appContext: Context): AppDatabase {
             return Room.databaseBuilder(appContext, AppDatabase::class.java, DATABASE_NAME)
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
@@ -39,7 +38,7 @@ abstract class AppDatabase : RoomDatabase() {
 
                             Log.d("Appdatabase", "onCreate")
                             Executors.newSingleThreadExecutor().execute {
-                                val database: AppDatabase = getInstance(appContext, executors)
+                                val database: AppDatabase = getInstance(appContext)
                                 insertEmojiList(database)
                             }
                         }

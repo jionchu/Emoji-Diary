@@ -11,16 +11,13 @@ import java.text.SimpleDateFormat
  */
 class MyApplication : Application() {
 
-    private lateinit var mAppExecutors: AppExecutors
-
     override fun onCreate() {
         super.onCreate()
-        mAppExecutors = AppExecutors()
         sRepository = getRepository()
     }
 
     fun getDatabase(): AppDatabase {
-        return AppDatabase.getInstance(this, mAppExecutors)
+        return AppDatabase.getInstance(this)
     }
 
     fun getRepository(): DataRepository {
